@@ -1,0 +1,12 @@
+
+$navigationHeight: 64px;
+.drawer-container {
+  min-height: calc(100% - 64px);
+}
+
+mat-drawer-content {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}

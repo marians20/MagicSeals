@@ -1,0 +1,43 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
+  background-color: rgb(255, 249, 241);
+  .statement {
+    padding: 5px;
+    border: 1px solid rgba(1, 1, 1, 0.3);
+    text-align: center;
+    p {
+      font-weight: 800;
+    }
+  }
+  .result {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    div {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column;
+      padding: 5px;
+      border: 1px solid rgba(1, 1, 1, 0.3);
+      text-align: center;
+    }
+    .literal-seal{
+      p {
+        font-weight: 800;
+      }
+    }
+    .numeric-seal {
+      p {
+        font-weight: 800;
+      }
+    }
+    .condensed-numeric-seal {
+      p {
+        font-weight: 800;
+      }
+    }
+  }
+}

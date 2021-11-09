@@ -1,0 +1,3 @@
+<app-dashboard-card *ngFor="let card of cards"
+  [cardModel]="card"
+  (click)="onCardClickHandler(card)"></app-dashboard-card>

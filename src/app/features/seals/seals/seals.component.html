@@ -1,0 +1,8 @@
+<mat-form-field appearance="outline">
+  <mat-label>Introduceti afirmatia aici</mat-label>
+  <textarea matInput rows="4" placeholder="Afirmatia" [(ngModel)]="statement" (ngModelChange)="onModelChangeHandler($event)"></textarea>
+  <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  <mat-hint>Afirmatia trebuie sa fie pozitiva, realizabila, si sa contina un sentiment</mat-hint>
+</mat-form-field>
+<app-seal [seal]="seal"></app-seal>
+
