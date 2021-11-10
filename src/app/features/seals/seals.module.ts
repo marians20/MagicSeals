@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { SealsRoutingModule } from './seals-routing.module';
-import { SealsComponent } from './seals/seals.component';
 import { MaterialModule } from '../../material.module';
-import { SealComponent } from './seals/seal/seal.component';
-
+import { SealComponent } from './components/seals/seal/seal.component';
+import { SealsComponent } from './components/seals/seals.component';
 
 @NgModule({
   declarations: [

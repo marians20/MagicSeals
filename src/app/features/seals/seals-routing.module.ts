@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SealsComponent } from './seals/seals.component';
+import { SealsComponent } from './components/seals/seals.component';
 
 const routes: Routes = [
   {

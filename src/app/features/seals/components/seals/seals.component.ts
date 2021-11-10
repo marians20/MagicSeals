@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Seal } from '../models/seal.model';
-import { SealsService } from '../services/seals.service';
+import { Seal } from '../../models/seal.model';
+import { SealsService } from '../../services/seals.service';
 
 @Component({
   selector: 'app-seals',

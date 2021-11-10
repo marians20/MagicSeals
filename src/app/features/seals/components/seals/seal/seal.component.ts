@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Seal } from '../../models/seal.model';
+import { Seal } from '../../../models/seal.model';
 
 @Component({
   selector: 'app-seal',
