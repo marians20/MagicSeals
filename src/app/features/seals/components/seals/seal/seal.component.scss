@@ -1,8 +1,11 @@
+@import '/src/styles/theme.scss';
+
 :host {
   display: flex;
   flex-direction: column;
   word-wrap: break-word;
-  background-color: rgb(255, 249, 241);
+  // background-color: rgb(255, 249, 241);
+  background-color: mat-color($angular-primary, background);
   .statement {
     padding: 5px;
     border: 1px solid rgba(1, 1, 1, 0.3);

@@ -3,7 +3,28 @@ mat-card {
   width: 100px;
   margin: 5px;
   cursor: pointer;
+  background: transparent;
+
+  .background {
+    position:absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    background-image: url('/assets/pictures/seal.jpg');
+    background-position: center;
+    background-size: contain;
+    opacity: 20%;
+  }
+
+  .mat-ccard:hover {
+    .background {
+      opacity: 100%;
+    }
+  }
 }
+
 mat-card:hover {
-  box-shadow: 10px 10px rgba(1, 1, 1, 0.5);
+  box-shadow: 5px 5px 5px rgba(1, 1, 1, 0.5);
 }

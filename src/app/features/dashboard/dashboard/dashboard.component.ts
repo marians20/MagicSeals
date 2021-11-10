@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
     {
       title: 'Seal',
       subtitle: 'Create a Magic Seal',
-      pictureUrl: '',
+      pictureUrl: '/assets/pictures/seal.jpg',
       navigationRoute: '/seals'
     }
   ];

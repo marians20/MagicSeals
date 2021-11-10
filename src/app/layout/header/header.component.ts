@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { SidebarService } from '../services/sidebar.service';
 
 @Component({
@@ -8,13 +10,19 @@ import { SidebarService } from '../services/sidebar.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private readonly sidebar: SidebarService) { }
+  constructor(
+    private readonly sidebar: SidebarService,
+    private readonly router: Router) { }
 
   ngOnInit(): void {
   }
 
   menuButtonClickHandle(): void {
     this.sidebar.toggle();
+  }
+
+  homeButtonClickHandle(): void {
+    this.router.navigate(['/dashboard']);
   }
 
 }
