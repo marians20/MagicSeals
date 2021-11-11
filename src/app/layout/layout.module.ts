@@ -7,6 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MaterialModule } from '../material.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { SealsModule } from '../features/seals/seals.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   imports: [
     CommonModule,
     MaterialModule,
-    LayoutRoutingModule
+    LayoutRoutingModule,
+    SealsModule
   ],
   exports: [
     LayoutComponent,

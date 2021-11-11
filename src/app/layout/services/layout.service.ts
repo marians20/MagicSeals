@@ -12,7 +12,10 @@ export class LayoutService {
   onDarkModeToggle = new Subject<boolean>();
 
   constructor() {
-    this._sidebarOpened = localStorage.getItem('sidebarOpened') === 'true';
+    this._sidebarOpened = localStorage.getItem('sidebarOpened')
+    ? localStorage.getItem('sidebarOpened') === 'true'
+    : true;
+
     this._darkMode = localStorage.getItem('darkMode') === 'true';
     console.log(this._sidebarOpened);
     console.log(this._darkMode);

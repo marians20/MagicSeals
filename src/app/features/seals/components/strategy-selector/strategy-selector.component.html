@@ -1,0 +1,8 @@
+<mat-card>
+  <mat-card-title>Selectati strategia de sigilare</mat-card-title>
+  <mat-radio-group aria-label="Select strategy" [value]="strategy" (change)="strategyChangedHandler($event.value)">
+    <mat-radio-button [value]="SealStrategy.RemoveAllAlreadyExistingCharacters">Strategia 1</mat-radio-button>
+    <mat-radio-button [value]="SealStrategy.RemoveAllCharactersWithMultipleOccurences">Strategia 2</mat-radio-button>
+    <mat-radio-button [value]="SealStrategy.RemovePairs">Strategia 3</mat-radio-button>
+  </mat-radio-group>
+</mat-card>

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SealStrategy } from '../models/seal-strategy.enum';
 import { Seal } from '../models/seal.model';
 
 @Injectable({
@@ -8,13 +9,34 @@ export class SealsService {
 
   constructor() { }
 
-  public getSeal(statement: string): Seal
+  public getSeal(statement: string, strategy: SealStrategy): Seal
   {
+    const dict = [
+      {
+        strategy: SealStrategy.RemoveAllCharactersWithMultipleOccurences,
+        method: ((words: string[]) => {
+          return this.removeCharsWithMultipleOccurences(words.join('')).toUpperCase();
+        })
+      },
+      {
+        strategy: SealStrategy.RemoveAllAlreadyExistingCharacters,
+        method: ((words: string[]) => {
+          return this.getDistinctChars(words.join('')).toUpperCase();
+        })
+      },
+      {
+        strategy: SealStrategy.RemovePairs,
+        method: ((words: string[]) => {
+          return this.removeDuplicates(words.join('')).toUpperCase();
+        })
+      },
+    ];
+
     const words = this.splitInWords(statement);
     const numericSeal = words.map(w => this.getNumericSeal(w)).join('')
     return {
       statement: this.splitInWords(statement).join(' '),
-      literalSeal: this.removeDuplicates(words.join('')).toUpperCase(),
+      literalSeal: dict[strategy].method(words),
       numericSeal,
       condensedNumericSeal: this.colapseToSingleDigit(numericSeal)
     }
@@ -68,6 +90,17 @@ export class SealsService {
       }
     } while (currentPosition < value.length);
     return result.join('');
+  }
+
+  private removeCharsWithMultipleOccurences(value: string): string {
+    let result: string = '';
+    [...this.removeSpaces(value)].forEach((character) => {
+      if(value.split(character).length < 3) {
+        result = `${result}${character}`;
+      }
+    });
+
+    return result;
   }
 
   private removeSpaces = (text: string): string => this.splitInWords(text).join('');
