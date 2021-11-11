@@ -1,13 +1,8 @@
-@use '@angular/material' as mat;
-@import '/src/styles/theme.scss';
-
-:host {
+mat-card {
   display: flex;
   flex-direction: column;
   word-wrap: break-word;
-  //background-color: rgb(255, 249, 241);
-  //background-color: mat-color($angular-accent, background);
-  background-color: mat.get-color-from-palette($angular-primary, 'darker');
+  background: transparent;
   .statement {
     padding: 5px;
     border: 1px solid rgba(1, 1, 1, 0.3);
