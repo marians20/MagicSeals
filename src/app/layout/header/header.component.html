@@ -5,4 +5,6 @@
   <span>Magic Seals</span>  <button mat-icon-button (click)="homeButtonClickHandle()">
     <mat-icon>home</mat-icon>
   </button>
+  <span class="example-spacer"></span>
+  <mat-slide-toggle (change)="setDarkMode($event.checked)" [checked]="darkMode">Dark mode</mat-slide-toggle>
 </mat-toolbar>
