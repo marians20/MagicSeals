@@ -146,7 +146,7 @@ export class SealsService {
   splitInWords(text: string): string[] {
     var punctuation = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
     var regex = new RegExp('[' + punctuation + ']', 'g');
-    return text
+    return text.toUpperCase()
       .replace(regex, ' ')
       .split(/\s+/g)
       .filter((w) => w != '');
