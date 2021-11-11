@@ -148,6 +148,11 @@ export class SealsService {
     var regex = new RegExp('[' + punctuation + ']', 'g');
     return text.toUpperCase()
       .replace(regex, ' ')
+      .replace('Ă', 'A')
+      .replace('Ș', 'S')
+      .replace('Ț', 'T')
+      .replace('Î', 'I')
+      .replace('Â', 'A')
       .split(/\s+/g)
       .filter((w) => w != '');
   }
