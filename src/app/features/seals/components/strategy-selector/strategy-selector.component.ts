@@ -12,6 +12,7 @@ export class StrategySelectorComponent implements OnInit, OnDestroy {
   private readonly _subscription: Subscription = new Subscription();
   SealStrategy = SealStrategy;
   strategy: SealStrategy;
+  tooltipHideDelay = 5000;
 
   constructor(private readonly strategySelectorService: StrategySelectorService) {
     this.strategy = strategySelectorService.strategy;
