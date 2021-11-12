@@ -122,11 +122,14 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestr
 
   private trimLineToCircle(p1: Point, p2: Point, radius: number): Point {
     const alpha = Math.atan((p2.y - p1.y) / (p2.x - p1.x));
-    return new Point(p1.x + radius * Math.cos(alpha), p1.y + radius * Math.sin(alpha));
+    let adjustment = p2.x < p1.x ? Math.PI : 0;
+    const x = p1.x + radius * Math.cos(alpha + adjustment);
+    const y = p1.y + radius * Math.sin(alpha + adjustment);
+    return new Point(x, y);
   }
 
   private getSealTerminator(lastSegment: Segment, radius: number): Segment {
-    const alpha = lastSegment.alpha + Math.PI / 2;
+    const alpha = lastSegment.alpha - Math.PI / 2;
     const cosAlpha = Math.cos(alpha);
     const sinAlpha = Math.sin(alpha);
     return new Segment(
