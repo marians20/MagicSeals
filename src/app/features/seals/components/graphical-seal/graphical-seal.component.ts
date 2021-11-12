@@ -121,7 +121,6 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestr
   }
 
   private trimLineToCircle(p1: Point, p2: Point, radius: number): Point {
-    console.log(p1, p2);
     const alpha = Math.atan((p2.y - p1.y) / (p2.x - p1.x));
     let adjustment = p2.x < p1.x ? Math.PI : 0;
     const x = p1.x + radius * Math.cos(alpha + adjustment);
