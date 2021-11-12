@@ -17,6 +17,9 @@ private readonly circles: number[][];
    this.getPolarCoordinates(sigil, zoomRatio).map(point => point.toCartezian());
 
   private getPolarCoordinates(sigil: string, zoomRatio: number): PolarPoint[]{
+    if(! sigil) {
+      return [];
+    }
     return [...sigil].map(letter => this.getLetterPolarCoordinates(letter)?.zoom(zoomRatio))
       .filter(p => p !== undefined) as PolarPoint[];
   }
