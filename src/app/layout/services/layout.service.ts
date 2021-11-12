@@ -17,8 +17,6 @@ export class LayoutService {
     : true;
 
     this._darkMode = localStorage.getItem('darkMode') === 'true';
-    console.log(this._sidebarOpened);
-    console.log(this._darkMode);
   }
 
   get sidebarOpened(): boolean {
