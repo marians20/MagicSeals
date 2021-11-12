@@ -54,9 +54,9 @@ export class SealsService {
     return result.join('');
   }
 
-  private getDistinctChars(text: string): string {
+  private getDistinctChars(value: string): string {
     let result: string = '';
-    [...this.removeSpaces(text)].forEach((character) => {
+    [...value].forEach((character) => {
       if (result.indexOf(character) === -1) {
         result = `${result}${character}`;
       }
@@ -70,40 +70,39 @@ export class SealsService {
       return value;
     }
 
-    value = this.removeSpaces(value);
-    var result: string[] = [];
-    var currentPosition = 0;
+    const result: string[] = [];
+    let currentPosition = 0;
     do {
-      var currentValue = value[currentPosition];
-      var pairIndex = value.substr(currentPosition + 1).indexOf(currentValue);
+      const currentValue = value[currentPosition];
+      const pairIndex = value.substr(currentPosition + 1).indexOf(currentValue);
       if (pairIndex >= 0) {
-        var left = value.substr(currentPosition + 1, pairIndex);
-        var right =
-          value.length >= pairIndex + 2
+        const left = value.substr(currentPosition + 1, pairIndex);
+        const right = value.length >= pairIndex + 2
             ? value.substr(currentPosition + pairIndex + 2)
             : '';
+
         value = `${left}${right}`;
         currentPosition = 0;
-      } else {
+      }
+      else {
         result.push(currentValue);
         currentPosition++;
       }
     } while (currentPosition < value.length);
+
     return result.join('');
   }
 
   private removeCharsWithMultipleOccurences(value: string): string {
     let result: string = '';
-    [...this.removeSpaces(value)].forEach((character) => {
-      if(value.split(character).length < 3) {
+    [...value].forEach((character) => {
+      if(this.getNrOfOcurrences(value, character) === 1) {
         result = `${result}${character}`;
       }
     });
 
     return result;
   }
-
-  private removeSpaces = (text: string): string => this.splitInWords(text).join('');
 
   private isCharacter = (text: string): boolean => /^[a-zA-Z]+$/.test(text);
 
@@ -112,14 +111,15 @@ export class SealsService {
   private getNrOfOcurrences = (text: string, value: string): number =>
     text.split(value).length - 1;
 
-    private getNumericValue(text: string): string {
-    var myText = text;
-    var a = 'A'.charCodeAt(0) - 1;
-    var result: string[] = [];
-    for (var i = 0; i < myText.length; i++) {
+  private getNumericValue(text: string): string {
+    let myText = text;
+    let a = 'A'.charCodeAt(0) - 1;
+    const result: string[] = [];
+    for (let i = 0; i < myText.length; i++) {
       if (this.isCharacter(myText)) {
         result.push(`${(myText[i].toUpperCase().charCodeAt(0) - a) % 10}`);
-      } else if (this.isDigit(myText)) {
+      }
+      else if (this.isDigit(myText)) {
         result.push(`${myText[i]}`);
       }
     }
@@ -128,14 +128,14 @@ export class SealsService {
   }
 
   private colapseToSingleDigit(text: string): string {
-    var result = 0;
-    for (var i = 0; i < text.length; i++) {
+    let result = 0;
+    for (let i = 0; i < text.length; i++) {
       result += +text[i];
     }
     while (result > 9) {
-      var strResult = result.toString();
+      const strResult = result.toString();
       result = 0;
-      for (var i = 0; i < strResult.length; i++) {
+      for (let i = 0; i < strResult.length; i++) {
         result += +strResult[i];
       }
     }
@@ -143,17 +143,17 @@ export class SealsService {
     return result.toString();
   }
 
-  splitInWords(text: string): string[] {
-    var punctuation = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
-    var regex = new RegExp('[' + punctuation + ']', 'g');
-    return text.toUpperCase()
-      .replace(regex, ' ')
-      .replace('Ă', 'A')
-      .replace('Ș', 'S')
-      .replace('Ț', 'T')
-      .replace('Î', 'I')
-      .replace('Â', 'A')
+  private splitInWords = (text: string) =>
+    this.fixDiacritics(text.toUpperCase())
+      .replace(new RegExp('[!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~]', 'g'), ' ')
       .split(/\s+/g)
       .filter((w) => w != '');
-  }
+
+  private fixDiacritics = (value: string) =>
+  value
+    .replace('Ă', 'A')
+    .replace('Ș', 'S')
+    .replace('Ț', 'T')
+    .replace('Î', 'I')
+    .replace('Â', 'A');
 }
