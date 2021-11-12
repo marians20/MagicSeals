@@ -1,28 +1,42 @@
-import { AfterContentInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 
-import { Size2D, Point } from './models';
-import { Segment } from './models/segment';
+import { Size2D, Point } from '../../models';
+import { Segment } from '../../models/segment';
+import { CharactersMapService } from '../../services/characters-map.service';
+import { GraphicalSealService } from '../../services/graphical-seal.service';
 
 @Component({
   selector: 'app-graphical-seal',
   templateUrl: './graphical-seal.component.html',
   styleUrls: ['./graphical-seal.component.scss']
 })
-export class GraphicalSealComponent implements OnInit, AfterContentInit {
-  @Input() literalSeal: string | undefined;
-  @Input() backgroundColor = '#FAFAFA';
-  @Input() foreColor = '#00FF00';
-  @Input() lineWidth: number = 1;
+export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestroy {
+  @Input() backgroundColor = '#AAAAAA';
+  @Input() foreColor = '#FFFF00';
+  @Input() lineWidth: number = 2;
   @ViewChild('canvas', { static: true }) canvas!: ElementRef<HTMLCanvasElement>;
 
+  private readonly _subscription: Subscription = new Subscription();
   private ctx: CanvasRenderingContext2D | undefined | null;
   private canvasSize: Size2D = new Size2D();
-  constructor() { }
+  private sealRadius!: number;
+  private padding: number = 4;
+  constructor(
+    private readonly mapService: CharactersMapService,
+    private readonly graphicalSealService: GraphicalSealService) {
+      this._subscription.add(this.graphicalSealService.onDrawSigilRequest.subscribe(literalSigil => {
+        this.drawSigil(literalSigil);
+      }));
+     }
 
   ngOnInit(): void {
     this.ctx = this.canvas.nativeElement.getContext('2d');
   }
 
+  ngOnDestroy(): void {
+    this._subscription.unsubscribe();
+  }
 
   ngAfterContentInit(): void {
     if(!this.ctx) {
@@ -30,24 +44,32 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit {
       return;
     }
     this.canvasSize = new Size2D(this.canvas.nativeElement.height, this.canvas.nativeElement.width);
+    this.sealRadius = Math.min(this.canvasSize.width, this.canvasSize.height) / 2 - this.padding;
 
-    this.drawBackground();
-    this.drawBorder();
+    this.drawSigil('');
+  }
+
+  public drawSigil(literalSigil: string) {
+    this.ctx!.clearRect(0, 0, this.canvasSize.width, this.canvasSize.height);
+    //this.drawBackground();
+    //this.drawBorder();
     this.drawSealCircle();
-    this.drawSeal([
-      {
-        x: 10, y: 25
-      },
-      {
-        x: 100, y: 250
-      },
-      {
-        x: 200, y: 30
-      },
-      {
-        x: 50, y: 100
-      },
-    ])
+
+    const points = this.mapService.getPoints(literalSigil, this.sealRadius)
+    .map(p => p.translate(this.sealRadius, this.sealRadius));
+    if(points.length === 0) {
+      return;
+    }
+    const startSealCircleRadius = Math.min(this.canvasSize.height, this.canvasSize.width) / 50;
+    this.drawCircle(points[0], startSealCircleRadius);
+
+    if(points.length < 2) {
+      return;
+    }
+
+    this.drawSealSegments(points, startSealCircleRadius);
+
+    this.drawSegment(this.getSealTerminator(new Segment(points.slice(-2)[0], points.slice(-1)[0]), startSealCircleRadius));
   }
 
   private drawBackground(): void {
@@ -62,25 +84,7 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit {
   }
 
   private drawSealCircle(): void {
-    const padding = 4;
-    const radius = Math.min(this.canvasSize.width, this.canvasSize.height) / 2 - padding;
-    this.drawCircle({x: this.canvasSize.width / 2, y: this.canvasSize.height / 2}, radius)
-  }
-
-  private drawSeal(points: Point[]) {
-    if(points.length === 0) {
-      return;
-    }
-    const startSealCircleRadius = Math.min(this.canvasSize.height, this.canvasSize.width) / 50;
-    this.drawCircle(points[0], startSealCircleRadius);
-
-    if(points.length < 2) {
-      return;
-    }
-
-    this.drawSealSegments(points, startSealCircleRadius);
-
-    this.drawSegment(this.getSealTerminator(new Segment(points.slice(-2)[0], points.slice(-1)[0]), startSealCircleRadius));
+    this.drawCircle(new Point(this.canvasSize.width / 2, this.canvasSize.height / 2), this.sealRadius)
   }
 
   private drawSealSegments(points: Point[], startSealCircleRadius: number) {
@@ -118,10 +122,7 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit {
 
   private trimLineToCircle(p1: Point, p2: Point, radius: number): Point {
     const alpha = Math.atan((p2.y - p1.y) / (p2.x - p1.x));
-    return {
-      x: p1.x + radius * Math.cos(alpha),
-      y: p1.y + radius * Math.sin(alpha)
-    };
+    return new Point(p1.x + radius * Math.cos(alpha), p1.y + radius * Math.sin(alpha));
   }
 
   private getSealTerminator(lastSegment: Segment, radius: number): Segment {
@@ -129,13 +130,8 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit {
     const cosAlpha = Math.cos(alpha);
     const sinAlpha = Math.sin(alpha);
     return new Segment(
-      {
-        x: lastSegment.p2.x - radius * cosAlpha,
-        y: lastSegment.p2.y - radius * sinAlpha
-      },      {
-        x: lastSegment.p2.x + radius * cosAlpha,
-        y: lastSegment.p2.y + radius * sinAlpha
-      },
+      new Point(lastSegment.p2.x - radius * cosAlpha, lastSegment.p2.y - radius * sinAlpha),
+      new Point(lastSegment.p2.x + radius * cosAlpha, lastSegment.p2.y + radius * sinAlpha)
     )
   }
 }

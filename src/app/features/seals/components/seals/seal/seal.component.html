@@ -1,25 +1,27 @@
 <mat-card>
-<div class="statement">
-  <label>Afirmatia:</label>
-  <p>{{seal?.statement}}</p>
-</div>
-<div class="result">
-  <div class="literal-seal">
-    <label>Sigiliul literal:</label>
-    <p>{{seal?.literalSeal}}</p>
+  <div class="statement">
+    <label>Afirmatia:</label>
+    <p>{{ seal?.statement }}</p>
   </div>
+  <div class="result">
+    <div class="values">
+      <div class="literal-seal">
+        <label>Sigiliul literal:</label>
+        <p>{{ seal?.literalSeal }}</p>
+      </div>
 
-  <div class="numeric-seal">
-    <label>Sigiliul numeric:</label>
-    <p>{{seal?.numericSeal}}</p>
-  </div>
+      <div class="numeric-seal">
+        <label>Sigiliul numeric:</label>
+        <p>{{ seal?.numericSeal }}</p>
+      </div>
 
-  <div class="condensed-numeric-seal">
-    <label>Sigiliul numeric condensat:</label>
-    <p>{{seal?.condensedNumericSeal}}</p>
+      <div class="condensed-numeric-seal">
+        <label>Sigiliul numeric condensat:</label>
+        <p>{{ seal?.condensedNumericSeal }}</p>
+      </div>
+    </div>
+    <div class="graphic-seal">
+      <app-graphical-seal [foreColor]="'black'"></app-graphical-seal>
+    </div>
   </div>
-</div>
-<div>
-  <app-graphical-seal [literalSeal]="seal?.literalSeal"></app-graphical-seal>
-</div>
 </mat-card>

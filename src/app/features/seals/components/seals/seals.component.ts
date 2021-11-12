@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { SealStrategy } from '../../models/seal-strategy.enum';
 import { Seal } from '../../models/seal.model';
 import { SealsService } from '../../services/seals.service';
 import { StrategySelectorService } from '../../services/strategy-selector.service';
+import { GraphicalSealService } from '../../services/graphical-seal.service';
 
 @Component({
   selector: 'app-seals',
@@ -16,11 +16,13 @@ export class SealsComponent implements OnInit, OnDestroy {
   seal: Seal = {}
   constructor(
     private readonly sealsService: SealsService,
-    private readonly strategyService: StrategySelectorService) { }
+    private readonly strategyService: StrategySelectorService,
+    private readonly graphicalSealService: GraphicalSealService) { }
 
   ngOnInit(): void {
     this._subscription.add(this.strategyService.onStrategyChange.subscribe(strategy => {
       this.seal = this.sealsService.getSeal(this.statement, strategy);
+      this.graphicalSealService.drawSigil(this.seal.literalSeal!);
     }));
   }
 
@@ -30,6 +32,7 @@ export class SealsComponent implements OnInit, OnDestroy {
 
   onModelChangeHandler(event: any) {
     this.seal = this.sealsService.getSeal(event, this.strategyService.strategy);
+    this.graphicalSealService.drawSigil(this.seal.literalSeal!);
   }
 
 }
