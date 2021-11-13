@@ -6,5 +6,10 @@
   "DASHBOARD": {
     "SIGIL": "Sigiliu",
     "CREATE_SIGIL": "Creare sigiliu magic"
+  },
+  "SIGILS" : {
+    "GRAPHICAL_SIGIL": "Sigiliul grafic",
+    "STATEMENT": "Afirmația",
+    "ENTER_STATEMENT": "Introduceti afirmatia aici"
   }
 }

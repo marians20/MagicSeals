@@ -6,5 +6,10 @@
   "DASHBOARD": {
     "SIGIL": "Sigil",
     "CREATE_SIGIL": "Create Magical Sigil"
+  },
+  "SIGILS" : {
+    "GRAPHICAL_SIGIL": "Graphical Sigil",
+    "STATEMENT": "Statement",
+    "ENTER_STATEMENT": "Enter the statement here"
   }
 }
