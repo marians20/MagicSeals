@@ -1,22 +1,22 @@
 <mat-card>
   <div class="statement">
-    <label>Afirmatia:</label>
+    <label>{{'SIGILS.STATEMENT' | translate}}:</label>
     <p>{{ seal?.statement }}</p>
   </div>
   <div class="result">
     <div class="values">
       <div class="literal-seal">
-        <label>Sigiliul literal:</label>
+        <label>{{'SIGILS.LITERAL_SIGIL' | translate}}:</label>
         <p>{{ seal?.literalSeal }}</p>
       </div>
 
       <div class="numeric-seal">
-        <label>Sigiliul numeric:</label>
+        <label>{{'SIGILS.NUMERIC_SIGIL' | translate}}:</label>
         <p>{{ seal?.numericSeal }}</p>
       </div>
 
       <div class="condensed-numeric-seal">
-        <label>Sigiliul numeric condensat:</label>
+        <label>{{'SIGILS.CONDENSED_NUMERIC_SIGIL' | translate}}:</label>
         <p>{{ seal?.condensedNumericSeal }}</p>
       </div>
     </div>

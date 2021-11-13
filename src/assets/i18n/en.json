@@ -10,6 +10,10 @@
   "SIGILS" : {
     "GRAPHICAL_SIGIL": "Graphical Sigil",
     "STATEMENT": "Statement",
-    "ENTER_STATEMENT": "Enter the statement here"
+    "ENTER_STATEMENT": "Enter the statement here",
+    "STATEMENT_DESCRIPTION": "The statement must be positive, achievable and contain a feeling",
+    "LITERAL_SEAL": "Literal Sigil",
+    "NUMERIC_SIGIL": "Numeric Sigil",
+    "CONDENSED_NUMERIC_SIGIL": "Reduced Numeric Sigil"
   }
 }
