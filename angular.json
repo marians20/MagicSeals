@@ -16,7 +16,7 @@
       "i18n": {
         "sourceLocale":"en-US",
         "locales": {
-          "ro": "src/locale/messages.ro.xlf"
+          "ro": "src/locale/message.ro.json"
         }
       },
       "root": "",
@@ -97,7 +97,11 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "MagicSeals:build"
+            "browserTarget": "MagicSeals:build",
+            "format": "json",
+            "outputPath": "src/locale",
+            "outFile": "message.json",
+            "progress": true
           }
         },
         "test": {
