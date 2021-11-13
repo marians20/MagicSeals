@@ -1,6 +1,6 @@
 <mat-card>
   <mat-form-field appearance="outline">
-    <mat-label>Introduceti afirmatia aici</mat-label>
+    <mat-label i18n>Introduceti afirmatia aici</mat-label>
     <textarea
       matInput
       rows="2"
@@ -9,8 +9,8 @@
       (ngModelChange)="onModelChangeHandler($event)"
     ></textarea>
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-    <mat-hint
-      >Afirmatia trebuie sa fie pozitiva, realizabila, si sa contina un
+    <mat-hint i18n
+      >Afirmatia trebuie sa fie pozitiva, realizabila si sa contina un
       sentiment</mat-hint
     >
   </mat-form-field>

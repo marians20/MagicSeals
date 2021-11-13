@@ -10,8 +10,8 @@ import { DashboardCardModel } from './dashboard-card/dashboard-card.model';
 export class DashboardComponent implements OnInit {
   cards: DashboardCardModel[] = [
     {
-      title: 'Sigiliu',
-      subtitle: 'Creare sigiliu magic',
+      title: $localize`Sigil`,
+      subtitle: $localize`Create magic sigil`,
       pictureUrl: '~/assets/pictures/seal.png',
       navigationRoute: '/seals'
     }
