@@ -1,23 +1,23 @@
 <mat-card>
-  <mat-card-title i18n>Selectati strategia de sigilare</mat-card-title>
+  <mat-card-title i18n>Select Sealing Strategy</mat-card-title>
   <mat-radio-group aria-label="Select strategy" [value]="strategy" (change)="strategyChangedHandler($event.value)">
     <mat-radio-button i18n
       [value]="SealStrategy.RemoveAllAlreadyExistingCharacters"
       matTooltip="Se pastrează doar caracterele care apar o singură dată în afirmație."
       [matTooltipPosition]="'left'"
       matTooltipHideDelay="tooltipHideDelay"
-      >Strategia 1</mat-radio-button>
+      >Strategy 1</mat-radio-button>
     <mat-radio-button i18n
       [value]="SealStrategy.RemoveAllCharactersWithMultipleOccurences"
       matTooltip="Dacă un caracter apare de mai multe ori, se păstrează doar primul."
       [matTooltipPosition]="'left'"
       matTooltipHideDelay="tooltipHideDelay"
-      >Strategia 2</mat-radio-button>
+      >Strategy 2</mat-radio-button>
     <mat-radio-button i18n
       [value]="SealStrategy.RemovePairs"
       matTooltip="Se șterg perechi de câte 2 caractere, rămân doar caracterele care apar de un număr impar de ori."
       [matTooltipPosition]="'left'"
       matTooltipHideDelay="tooltipHideDelay"
-      >Strategia 3</mat-radio-button>
+      >Strategy 3</mat-radio-button>
   </mat-radio-group>
 </mat-card>
