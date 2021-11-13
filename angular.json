@@ -16,7 +16,8 @@
       "i18n": {
         "sourceLocale":"en-US",
         "locales": {
-          "ro": "src/locale/message.ro.json"
+          "ro": "src/locale/message.ro.json",
+          "en": "src/locale/message.json"
         }
       },
       "root": "",
@@ -75,6 +76,9 @@
             },
             "ro": {
               "localize": ["ro"]
+            },
+            "en": {
+              "localize": ["en"]
             }
           },
           "defaultConfiguration": "production"
@@ -90,6 +94,9 @@
             },
             "ro": {
               "browserTarget": "MagicSeals:build:ro"
+            },
+            "en": {
+              "browserTarget": "MagicSeals:build:en"
             }
           },
           "defaultConfiguration": "development"
