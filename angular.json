@@ -13,6 +13,12 @@
           "strict": true
         }
       },
+      "i18n": {
+        "sourceLocale":"en-US",
+        "locales": {
+          "ro": "src/i18n/messages.ro.xlf"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -37,6 +43,9 @@
             "scripts": []
           },
           "configurations": {
+            "ro": {
+              "localize": ["ro"]
+            },
             "production": {
               "budgets": [
                 {
