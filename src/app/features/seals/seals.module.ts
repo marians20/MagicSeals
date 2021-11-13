@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { SealsRoutingModule } from './seals-routing.module';
 import { MaterialModule } from '../../material.module';
@@ -20,6 +21,7 @@ import { GraphicalSealComponent } from './components/graphical-seal/graphical-se
     CommonModule,
     FormsModule,
     MaterialModule,
+    TranslateModule.forChild(),
     SealsRoutingModule
   ],
   exports: [

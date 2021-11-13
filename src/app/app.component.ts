@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { LayoutService } from './layout/services/layout.service';
 
@@ -12,7 +13,11 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'MagicSeals';
   usesDarkMode: boolean;
 
-  constructor(private readonly layoutService: LayoutService){
+  constructor(
+    private readonly layoutService: LayoutService,
+    private readonly translate: TranslateService) {
+    translate.setDefaultLang('ro');
+    translate.use('ro');
     this.usesDarkMode = layoutService.darkModeEnabled;
   }
 

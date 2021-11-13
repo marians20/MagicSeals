@@ -2,9 +2,10 @@
   <button mat-icon-button (click)="menuButtonClickHandle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>Sigilii magice</span>  <button mat-icon-button (click)="homeButtonClickHandle()">
+  <span>{{'HEADER.TITLE' | translate}}</span>  <button mat-icon-button (click)="homeButtonClickHandle()">
     <mat-icon>home</mat-icon>
   </button>
   <span class="example-spacer"></span>
-  <mat-slide-toggle (change)="setDarkMode($event.checked)" [checked]="darkMode">Mod intunecat</mat-slide-toggle>
+  <mat-slide-toggle (change)="setDarkMode($event.checked)" [checked]="darkMode"
+  >{{'HEADER.DARK_MODE' | translate}}</mat-slide-toggle>
 </mat-toolbar>

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
 
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout/layout.component';
@@ -8,7 +10,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { MaterialModule } from '../material.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SealsModule } from '../features/seals/seals.module';
-
+import { HttpLoaderFactory } from '../app.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,13 @@ import { SealsModule } from '../features/seals/seals.module';
   imports: [
     CommonModule,
     MaterialModule,
+        TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     LayoutRoutingModule,
     SealsModule
   ],
