@@ -2,5 +2,9 @@
   "HEADER": {
     "TITLE": "Sigilii magice",
     "DARK_MODE": "Mod întunecat"
+  },
+  "DASHBOARD": {
+    "SIGIL": "Sigiliu",
+    "CREATE_SIGIL": "Creare sigiliu magic"
   }
 }

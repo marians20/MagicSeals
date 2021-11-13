@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
 import { LayoutService } from '../services/layout.service';
@@ -14,7 +15,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   darkMode: boolean;
   constructor(
     private readonly layoutService: LayoutService,
-    private readonly router: Router) {
+    private readonly router: Router,
+    public readonly translate: TranslateService) {
       this.darkMode = layoutService.darkModeEnabled;
       this._subscription.add(this.layoutService.onDarkModeToggle.subscribe(darkMode => {
         this.darkMode = darkMode;

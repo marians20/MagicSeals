@@ -16,8 +16,10 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private readonly layoutService: LayoutService,
     private readonly translate: TranslateService) {
+    translate.addLangs(['en', 'ro']);
     translate.setDefaultLang('ro');
-    translate.use('ro');
+    const browserLang: string = translate.getBrowserLang() ?? 'en';
+    translate.use(browserLang.match(/en|ro/) ? browserLang : 'en');
     this.usesDarkMode = layoutService.darkModeEnabled;
   }
 

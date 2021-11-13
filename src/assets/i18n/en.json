@@ -2,5 +2,9 @@
   "HEADER": {
     "TITLE": "Magical Sigils",
     "DARK_MODE": "Dark mode"
+  },
+  "DASHBOARD": {
+    "SIGIL": "Sigil",
+    "CREATE_SIGIL": "Create Magical Sigil"
   }
 }
