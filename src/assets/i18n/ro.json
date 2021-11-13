@@ -14,7 +14,12 @@
     "STATEMENT_DESCRIPTION": "Afirmația trebuie să fie pozitivă, realizabilă și să conțină un sentiment",
     "LITERAL_SIGIL": "Sigiliul literal",
     "NUMERIC_SIGIL": "Sigiliul numeric",
-    "CONDENSED_NUMERIC_SIGIL": "Sigiliul numeric condensat"
+    "CONDENSED_NUMERIC_SIGIL": "Sigiliul numeric condensat",
+    "SELECT_SEALING_STRATEGY": "Selectați strategia de sigilare",
+    "STRATEGY": "Strategia",
+    "STRATEGY_1_DESCRIPTION": "Se pastrează doar caracterele care apar o singură dată în afirmație.",
+    "STRATEGY_2_DESCRIPTION": "Dacă un caracter apare de mai multe ori, se păstrează doar prima apariție",
+    "STRATEGY_3_DESCRIPTION": "Se șterg perechi de câte 2 caractere, rămân doar caracterele care apar de un număr impar de ori."
 
   }
 }

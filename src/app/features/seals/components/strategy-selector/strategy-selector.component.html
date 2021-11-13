@@ -1,23 +1,23 @@
 <mat-card>
-  <mat-card-title>Selectati strategia de sigilare</mat-card-title>
-  <mat-radio-group aria-label="Select strategy" [value]="strategy" (change)="strategyChangedHandler($event.value)">
+  <mat-card-title>{{'SIGILS.SELECT_SEALING_STRATEGY' | translate}}</mat-card-title>
+  <mat-radio-group [value]="strategy" (change)="strategyChangedHandler($event.value)">
     <mat-radio-button
       [value]="SealStrategy.RemoveAllAlreadyExistingCharacters"
-      matTooltip="Se pastrează doar caracterele care apar o singură dată în afirmație."
+      [matTooltip]="'SIGILS.STRATEGY_1_DESCRIPTION' | translate"
       [matTooltipPosition]="'left'"
       matTooltipHideDelay="tooltipHideDelay"
-      >Strategia 1</mat-radio-button>
+      >{{'SIGILS.STRATEGY' | translate}} 1</mat-radio-button>
     <mat-radio-button
       [value]="SealStrategy.RemoveAllCharactersWithMultipleOccurences"
-      matTooltip="Dacă un caracter apare de mai multe ori, se păstrează doar primul."
+      [matTooltip]="'SIGILS.STRATEGY_2_DESCRIPTION' | translate"
       [matTooltipPosition]="'left'"
       matTooltipHideDelay="tooltipHideDelay"
-      >Strategia 2</mat-radio-button>
+      >{{'SIGILS.STRATEGY' | translate}} 2</mat-radio-button>
     <mat-radio-button
       [value]="SealStrategy.RemovePairs"
-      matTooltip="Se șterg perechi de câte 2 caractere, rămân doar caracterele care apar de un număr impar de ori."
+      [matTooltip]="'SIGILS.STRATEGY_3_DESCRIPTION' | translate"
       [matTooltipPosition]="'left'"
       matTooltipHideDelay="tooltipHideDelay"
-      >Strategia 3</mat-radio-button>
+      >{{'SIGILS.STRATEGY' | translate}} 3</mat-radio-button>
   </mat-radio-group>
 </mat-card>
