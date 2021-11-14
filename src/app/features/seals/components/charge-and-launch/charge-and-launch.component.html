@@ -1,0 +1,14 @@
+<div mat-dialog-title>
+  <span>{{'SIGILS.GRAPHICAL_SIGIL' | translate}}</span>
+  <span><button mat-icon-button (click)="handleCloseDialog(false)">
+    <mat-icon>close</mat-icon>
+  </button></span>
+</div>
+
+<div mat-dialog-content class="sigil-image">
+  <img [src]="image" height="400px" width="400px">
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="handleCloseDialog(true)">{{'SIGILS.LAUNCH' | translate}}</button>
+</div>

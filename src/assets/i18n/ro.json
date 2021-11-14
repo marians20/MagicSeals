@@ -19,7 +19,9 @@
     "STRATEGY": "Strategia",
     "STRATEGY_1_DESCRIPTION": "Se pastrează doar caracterele care apar o singură dată în afirmație.",
     "STRATEGY_2_DESCRIPTION": "Dacă un caracter apare de mai multe ori, se păstrează doar prima apariție",
-    "STRATEGY_3_DESCRIPTION": "Se șterg perechi de câte 2 caractere, rămân doar caracterele care apar de un număr impar de ori."
+    "STRATEGY_3_DESCRIPTION": "Se șterg perechi de câte 2 caractere, rămân doar caracterele care apar de un număr impar de ori.",
+    "CHARGE": "Încărcare sigiliu",
+    "LAUNCH": "Lansare sigiliu!"
 
   }
 }

@@ -28,6 +28,10 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestr
       this._subscription.add(this.graphicalSealService.onDrawSigilRequest.subscribe(literalSigil => {
         this.drawSigil(literalSigil);
       }));
+
+      this._subscription.add(this.graphicalSealService.onGetImageRequest.subscribe(() => {
+        this.graphicalSealService.image = this.getJpeg();
+      }));      
      }
 
   ngOnInit(): void {
@@ -70,6 +74,18 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestr
     this.drawSealSegments(points, startSealCircleRadius);
 
     this.drawSegment(this.getSealTerminator(new Segment(points.slice(-2)[0], points.slice(-1)[0]), startSealCircleRadius));
+  }
+
+  public getBitmap() {
+    return this.ctx!
+    .getImageData(0, 0, this.canvasSize.height, this.canvasSize.width).data;
+    this.canvas.nativeElement.toDataURL("image/jpeg", 1.0).replace("data:image/jpeg;base64,","");
+  }
+
+  public getJpeg() {
+    return this.canvas.nativeElement
+      .toDataURL("image/jpeg", 1.0);
+      //.replace("data:image/jpeg;base64,","");
   }
 
   private drawBackground(): void {

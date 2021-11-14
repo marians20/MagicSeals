@@ -4,6 +4,7 @@ import { Seal } from '../../models/seal.model';
 import { SealsService } from '../../services/seals.service';
 import { StrategySelectorService } from '../../services/strategy-selector.service';
 import { GraphicalSealService } from '../../services/graphical-seal.service';
+import { ChargeAndLaunchService } from '../../services/charge-and-launch.service';
 
 @Component({
   selector: 'app-seals',
@@ -17,7 +18,8 @@ export class SealsComponent implements OnInit, OnDestroy {
   constructor(
     private readonly sealsService: SealsService,
     private readonly strategyService: StrategySelectorService,
-    private readonly graphicalSealService: GraphicalSealService) { }
+    private readonly graphicalSealService: GraphicalSealService,
+    private readonly chargeAndLaunchService: ChargeAndLaunchService) { }
 
   ngOnInit(): void {
     this._subscription.add(this.strategyService.onStrategyChange.subscribe(strategy => {
@@ -33,6 +35,17 @@ export class SealsComponent implements OnInit, OnDestroy {
   onModelChangeHandler(event: any) {
     this.seal = this.sealsService.getSeal(event, this.strategyService.strategy);
     this.graphicalSealService.drawSigil(this.seal.literalSeal!);
+  }
+
+  handleChargeClick() {
+    this._subscription.add(this.chargeAndLaunchService
+      .openDialog().subscribe((data: boolean) => {
+      if(data) {
+        this.statement = '';
+        this.seal = this.sealsService.getSeal(this.statement, this.strategyService.strategy);
+        this.graphicalSealService.drawSigil(this.seal.literalSeal??'');
+      }
+    }));
   }
 
 }
