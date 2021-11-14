@@ -1,6 +1,9 @@
+mat-toolbar {
+  display: flex;
+}
 .example-spacer {
   flex: 1 1 auto;
 }
-select {
+app-language-selector {
   margin-left: 1em;
 }

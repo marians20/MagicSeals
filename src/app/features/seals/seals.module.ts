@@ -10,6 +10,7 @@ import { SealsComponent } from './components/seals/seals.component';
 import { StrategySelectorComponent } from './components/strategy-selector/strategy-selector.component';
 import { GraphicalSealComponent } from './components/graphical-seal/graphical-seal.component';
 import { ChargeAndLaunchComponent } from './components/charge-and-launch/charge-and-launch.component';
+import { DialogDraggableTitleDirective } from './directives/dialog-draggable-title.directive';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ChargeAndLaunchComponent } from './components/charge-and-launch/charge-
     SealComponent,
     StrategySelectorComponent,
     GraphicalSealComponent,
-    ChargeAndLaunchComponent
+    ChargeAndLaunchComponent,
+    DialogDraggableTitleDirective
   ],
   imports: [
     CommonModule,

@@ -12,7 +12,7 @@ import { GraphicalSealService } from '../../services/graphical-seal.service';
   styleUrls: ['./graphical-seal.component.scss']
 })
 export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestroy {
-  @Input() backgroundColor = '#AAAAAA';
+  @Input() backgroundColor = '#FFFFFF';
   @Input() foreColor = '#FFFF00';
   @Input() lineWidth: number = 2;
   @ViewChild('canvas', { static: true }) canvas!: ElementRef<HTMLCanvasElement>;
@@ -55,7 +55,7 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestr
 
   public drawSigil(literalSigil: string) {
     this.ctx!.clearRect(0, 0, this.canvasSize.width, this.canvasSize.height);
-    //this.drawBackground();
+    this.drawBackground();
     //this.drawBorder();
     this.drawSealCircle();
 

@@ -11,13 +11,17 @@ import { MaterialModule } from '../material.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SealsModule } from '../features/seals/seals.module';
 import { HttpLoaderFactory } from '../app.module';
+import { LanguageSelectorComponent } from './components/language-selector/language-selector.component';
+import { DarkModeSelectorComponent } from './components/dark-mode-selector/dark-mode-selector.component';
 
 @NgModule({
   declarations: [
     LayoutComponent,
     HeaderComponent,
     PageNotFoundComponent,
-    SidebarComponent
+    SidebarComponent,
+    LanguageSelectorComponent,
+    DarkModeSelectorComponent
   ],
   imports: [
     CommonModule,

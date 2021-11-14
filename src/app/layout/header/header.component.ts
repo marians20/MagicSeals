@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
 import { LayoutService } from '../services/layout.service';
@@ -10,26 +9,15 @@ import { LayoutService } from '../services/layout.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
-  private _subscription = new Subscription();
-  darkMode: boolean;
+export class HeaderComponent implements OnInit {
   today: Date = new Date();
 
   constructor(
     private readonly layoutService: LayoutService,
-    private readonly router: Router,
-    public readonly translate: TranslateService) {
-      this.darkMode = layoutService.darkModeEnabled;
-      this._subscription.add(this.layoutService.onDarkModeToggle.subscribe(darkMode => {
-        this.darkMode = darkMode;
-      }))
+    private readonly router: Router) {
      }
 
   ngOnInit(): void {
-  }
-
-  ngOnDestroy(): void {
-    this._subscription.unsubscribe();
   }
 
   menuButtonClickHandle(): void {
@@ -38,10 +26,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   homeButtonClickHandle(): void {
     this.router.navigate(['/dashboard']);
-  }
-
-  setDarkMode(enabled: boolean): void {
-    this.layoutService.darkModeEnabled = enabled;
   }
 
 }

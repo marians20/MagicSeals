@@ -1,5 +1,5 @@
 <mat-card>
-  <div class="statement">
+  <div *ngIf="showStatement" class="statement">
     <label>{{'SIGILS.STATEMENT' | translate}}:</label>
     <p>{{ seal?.statement }}</p>
   </div>
@@ -19,7 +19,9 @@
       </div>
     </div>
     <div class="graphic-seal">
-      <app-graphical-seal [foreColor]="sealColor"></app-graphical-seal>
+      <app-graphical-seal
+        [backgroundColor]="sealBackgroundColor"
+        [foreColor]="sealColor"></app-graphical-seal>
     </div>
   </div>
 </mat-card>
