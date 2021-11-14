@@ -9,13 +9,15 @@ import { SealComponent } from './components/seals/seal/seal.component';
 import { SealsComponent } from './components/seals/seals.component';
 import { StrategySelectorComponent } from './components/strategy-selector/strategy-selector.component';
 import { GraphicalSealComponent } from './components/graphical-seal/graphical-seal.component';
+import { ChargeAndLaunchComponent } from './components/charge-and-launch/charge-and-launch.component';
 
 @NgModule({
   declarations: [
     SealsComponent,
     SealComponent,
     StrategySelectorComponent,
-    GraphicalSealComponent
+    GraphicalSealComponent,
+    ChargeAndLaunchComponent
   ],
   imports: [
     CommonModule,

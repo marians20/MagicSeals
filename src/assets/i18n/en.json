@@ -19,6 +19,8 @@
     "STRATEGY": "Strategy",
     "STRATEGY_1_DESCRIPTION": "Only characters that appear once in the statement are retained.",
     "STRATEGY_2_DESCRIPTION": "If a character appears multiple times, only the first occurrence is retained.",
-    "STRATEGY_3_DESCRIPTION": "Pairs of 2 characters are deleted, only the characters that appear an odd number of times remain."
+    "STRATEGY_3_DESCRIPTION": "Pairs of 2 characters are deleted, only the characters that appear an odd number of times remain.",
+    "CHARGE": "Charge the sigil",
+    "LAUNCH": "Launch the sigil!"
   }
 }

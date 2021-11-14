@@ -11,5 +11,8 @@
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
     <mat-hint>{{'SIGILS.STATEMENT_DESCRIPTION' | translate}}</mat-hint>
   </mat-form-field>
+  <button mat-button color="primary" (click)="handleChargeClick()">
+    {{'SIGILS.CHARGE' | translate}}
+  </button>
 </mat-card>
 <app-seal [seal]="seal"></app-seal>
