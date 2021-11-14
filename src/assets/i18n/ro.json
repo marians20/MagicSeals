@@ -21,7 +21,9 @@
     "STRATEGY_2_DESCRIPTION": "Dacă un caracter apare de mai multe ori, se păstrează doar prima apariție",
     "STRATEGY_3_DESCRIPTION": "Se șterg perechi de câte 2 caractere, rămân doar caracterele care apar de un număr impar de ori.",
     "CHARGE": "Încărcare sigiliu",
-    "LAUNCH": "Lansare sigiliu!"
+    "LAUNCH": "Lansare sigiliu!",
+    "SIGIL_LAUNCHED_CONFIRMATION_MESSAGE": "Sigiliul a fost lansat cu success!",
+    "SIGIL_LAUNCHED_CONFIRMATION_TITLE": "Felicitări!"
 
   }
 }

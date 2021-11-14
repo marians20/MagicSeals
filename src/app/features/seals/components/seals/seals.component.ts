@@ -1,10 +1,14 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+
 import { Seal } from '../../models/seal.model';
 import { SealsService } from '../../services/seals.service';
 import { StrategySelectorService } from '../../services/strategy-selector.service';
 import { GraphicalSealService } from '../../services/graphical-seal.service';
 import { ChargeAndLaunchService } from '../../services/charge-and-launch.service';
+import { ToasterService } from 'src/app/shared/services/toaster.service';
+
 
 @Component({
   selector: 'app-seals',
@@ -12,14 +16,23 @@ import { ChargeAndLaunchService } from '../../services/charge-and-launch.service
   styleUrls: ['./seals.component.scss']
 })
 export class SealsComponent implements OnInit, OnDestroy {
-  private _subscription: Subscription = new Subscription()
+  private _subscription: Subscription = new Subscription();
+  private sigilLaunchedMessage!: string;
+  private sigilLaunchedMessageTitle!: string;
   statement: string = ''
   seal: Seal = {}
   constructor(
     private readonly sealsService: SealsService,
     private readonly strategyService: StrategySelectorService,
     private readonly graphicalSealService: GraphicalSealService,
-    private readonly chargeAndLaunchService: ChargeAndLaunchService) { }
+    private readonly chargeAndLaunchService: ChargeAndLaunchService,
+    private toastr: ToasterService,
+    private readonly translate: TranslateService) {
+      this.getTranslations();
+      this._subscription.add(this.translate.onLangChange.subscribe(_ => {
+        this.getTranslations();
+      }));
+     }
 
   ngOnInit(): void {
     this._subscription.add(this.strategyService.onStrategyChange.subscribe(strategy => {
@@ -44,8 +57,16 @@ export class SealsComponent implements OnInit, OnDestroy {
         this.statement = '';
         this.seal = this.sealsService.getSeal(this.statement, this.strategyService.strategy);
         this.graphicalSealService.drawSigil(this.seal.literalSeal??'');
+        this.toastr.showSuccess(this.sigilLaunchedMessage, this.sigilLaunchedMessageTitle);
       }
     }));
   }
 
+  private getTranslations(): void {
+    this._subscription.add(this.translate.get("SIGILS").subscribe(data => {
+      console.log(data);
+      this.sigilLaunchedMessage = data.SIGIL_LAUNCHED_CONFIRMATION_MESSAGE;
+      this.sigilLaunchedMessageTitle = data.SIGIL_LAUNCHED_CONFIRMATION_MESSAGE_TITLE;
+    }));
+  }
 }
