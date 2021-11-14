@@ -1,0 +1,24 @@
+{
+  "HEADER": {
+    "TITLE": "Magical Sigils",
+    "DARK_MODE": "Dark mode"
+  },
+  "DASHBOARD": {
+    "SIGIL": "Sigil",
+    "CREATE_SIGIL": "Create Magical Sigil"
+  },
+  "SIGILS" : {
+    "GRAPHICAL_SIGIL": "Graphical Sigil",
+    "STATEMENT": "Statement",
+    "ENTER_STATEMENT": "Enter the statement here",
+    "STATEMENT_DESCRIPTION": "The statement must be positive, achievable and contain a feeling",
+    "LITERAL_SIGIL": "Literal Sigil",
+    "NUMERIC_SIGIL": "Numeric Sigil",
+    "CONDENSED_NUMERIC_SIGIL": "Reduced Numeric Sigil",
+    "SELECT_SEALING_STRATEGY": "Select sealing strategy",
+    "STRATEGY": "Strategy",
+    "STRATEGY_1_DESCRIPTION": "Only characters that appear once in the statement are retained.",
+    "STRATEGY_2_DESCRIPTION": "If a character appears multiple times, only the first occurrence is retained.",
+    "STRATEGY_3_DESCRIPTION": "Pairs of 2 characters are deleted, only the characters that appear an odd number of times remain."
+  }
+}

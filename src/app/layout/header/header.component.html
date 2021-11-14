@@ -2,10 +2,13 @@
   <button mat-icon-button (click)="menuButtonClickHandle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span i18n>Magic Sigils</span>  <button mat-icon-button (click)="homeButtonClickHandle()">
+  <span>{{'HEADER.TITLE' | translate}}</span>  <button mat-icon-button (click)="homeButtonClickHandle()">
     <mat-icon>home</mat-icon>
   </button>
   <span class="example-spacer"></span>
-  <span>{{today | date}}</span>
-  <mat-slide-toggle i18n (change)="setDarkMode($event.checked)" [checked]="darkMode">Dark mode</mat-slide-toggle>
+  <mat-slide-toggle (change)="setDarkMode($event.checked)" [checked]="darkMode"
+  >{{'HEADER.DARK_MODE' | translate}}</mat-slide-toggle>
+  <select #langSelect (change)="translate.use(langSelect.value)" color="primary">
+    <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+  </select>
 </mat-toolbar>
