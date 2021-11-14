@@ -13,6 +13,8 @@ import { LayoutService } from '../services/layout.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   private _subscription = new Subscription();
   darkMode: boolean;
+  today: Date = new Date();
+
   constructor(
     private readonly layoutService: LayoutService,
     private readonly router: Router,
