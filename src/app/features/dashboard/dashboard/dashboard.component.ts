@@ -36,6 +36,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private getTranslations() {
     this._subscriptions.add(this.translate.get("DASHBOARD").subscribe(data => {
+      console.log(data);
       this.cards = this.cards.filter(c => c.navigationRoute !== '/seals')
       this.cards.push({
         title: data.SIGIL,

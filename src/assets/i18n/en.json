@@ -21,6 +21,8 @@
     "STRATEGY_2_DESCRIPTION": "If a character appears multiple times, only the first occurrence is retained.",
     "STRATEGY_3_DESCRIPTION": "Pairs of 2 characters are deleted, only the characters that appear an odd number of times remain.",
     "CHARGE": "Charge the sigil",
-    "LAUNCH": "Launch the sigil!"
+    "LAUNCH": "Launch the sigil!",
+    "SIGIL_LAUNCHED_CONFIRMATION_MESSAGE": "The sigil has been successfully launched!",
+    "SIGIL_LAUNCHED_CONFIRMATION_TITLE": "Congratulations!"
   }
 }

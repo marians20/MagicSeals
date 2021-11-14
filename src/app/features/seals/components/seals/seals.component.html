@@ -4,12 +4,14 @@
     <textarea
       matInput
       rows="2"
-      [placeholder]="'SIGILS.STATEMENT' | translate"
+      [matTooltip]="'SIGILS.STATEMENT_DESCRIPTION' | translate"
+      [matTooltipPosition]="'right'"
+      matTooltipHideDelay="tooltipHideDelay"
+      [placeholder]="'SIGILS.STATEMENT_DESCRIPTION' | translate"
       [(ngModel)]="statement"
       (ngModelChange)="onModelChangeHandler($event)"
     ></textarea>
-    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-    <mat-hint>{{'SIGILS.STATEMENT_DESCRIPTION' | translate}}</mat-hint>
+    <mat-icon matSuffix (click)="statement = ''">clear</mat-icon>
   </mat-form-field>
   <button mat-stroked-button color="primary"
     [disabled]="!statement"
