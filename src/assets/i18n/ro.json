@@ -10,7 +10,7 @@
   "SIGILS" : {
     "GRAPHICAL_SIGIL": "Sigiliul grafic",
     "STATEMENT": "Afirmația",
-    "ENTER_STATEMENT": "Introduceti afirmatia aici",
+    "ENTER_STATEMENT": "Introduceți afirmația aici",
     "STATEMENT_DESCRIPTION": "Afirmația trebuie să fie pozitivă, realizabilă și să conțină un sentiment",
     "LITERAL_SIGIL": "Sigiliul literal",
     "NUMERIC_SIGIL": "Sigiliul numeric",
