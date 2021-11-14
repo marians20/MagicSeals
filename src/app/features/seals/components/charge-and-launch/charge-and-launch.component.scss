@@ -1,5 +1,4 @@
-@use '~@angular/material' as mat;
-@import '../../../../../styles/theme.scss';
+//@import '../../../../../styles/theme.scss';
 
 .mat-dialog-title {
     display: flex;
@@ -11,7 +10,7 @@
     margin-right: -24px;
     padding-left: 4px;
     padding-right: 2px;
-    background-color: $primary;
+    //background-color: $primary;
 }
 
 .sigil-image {
