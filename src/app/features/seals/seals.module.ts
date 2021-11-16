@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
 
 import { SealsRoutingModule } from './seals-routing.module';
 import { MaterialModule } from '../../material.module';
@@ -12,7 +13,6 @@ import { GraphicalSealComponent } from './components/graphical-seal/graphical-se
 import { ChargeAndLaunchComponent } from './components/charge-and-launch/charge-and-launch.component';
 import { DialogDraggableTitleDirective } from './directives/dialog-draggable-title.directive';
 import { HttpLoaderFactory } from 'src/app/app.module';
-import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [

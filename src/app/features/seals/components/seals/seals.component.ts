@@ -1,14 +1,8 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { Seal } from '../../models/seal.model';
-import { SealsService } from '../../services/seals.service';
-import { StrategySelectorService } from '../../services/strategy-selector.service';
-import { GraphicalSealService } from '../../services/graphical-seal.service';
-import { ChargeAndLaunchService } from '../../services/charge-and-launch.service';
-import { ToasterService } from 'src/app/shared/services/toaster.service';
-
+import { SealsComponentFacade } from './seals-component.facade';
 
 @Component({
   selector: 'app-seals',
@@ -21,25 +15,21 @@ export class SealsComponent implements OnInit, OnDestroy {
   private sigilNotLaunchedMessageTitle!: string;
   private sigilNotLaunchedMessage!: string;
   private sigilLaunchedMessageTitle!: string;
+  private readyToChargeQuestion!: string;
+  private questionTitle!: string;
   statement: string = ''
   seal: Seal = {}
-  constructor(
-    private readonly sealsService: SealsService,
-    private readonly strategyService: StrategySelectorService,
-    private readonly graphicalSealService: GraphicalSealService,
-    private readonly chargeAndLaunchService: ChargeAndLaunchService,
-    private toastr: ToasterService,
-    private readonly translate: TranslateService) {
+  constructor(private readonly facade: SealsComponentFacade) {
       this.getTranslations();
-      this._subscription.add(this.translate.onLangChange.subscribe(_ => {
+      this._subscription.add(this.facade.onLangChange.subscribe(_ => {
         this.getTranslations();
       }));
      }
 
   ngOnInit(): void {
-    this._subscription.add(this.strategyService.onStrategyChange.subscribe(strategy => {
-      this.seal = this.sealsService.getSeal(this.statement, strategy);
-      this.graphicalSealService.drawSigil(this.seal.literalSeal!);
+    this._subscription.add(this.facade.onStrategyChange.subscribe(strategy => {
+      this.seal = this.facade.getSeal(this.statement);
+      this.facade.drawSigil(this.seal.literalSeal!);
     }));
   }
 
@@ -48,30 +38,44 @@ export class SealsComponent implements OnInit, OnDestroy {
   }
 
   onModelChangeHandler(event: any) {
-    this.seal = this.sealsService.getSeal(event, this.strategyService.strategy);
-    this.graphicalSealService.drawSigil(this.seal.literalSeal!);
+    this.seal = this.facade.getSeal(event);
+    this.facade.drawSigil(this.seal.literalSeal!);
   }
 
   handleChargeClick() {
-    this._subscription.add(this.chargeAndLaunchService
-      .openDialog().subscribe((data: boolean) => {
-      if(data) {
-        this.statement = '';
-        this.seal = this.sealsService.getSeal(this.statement, this.strategyService.strategy);
-        this.graphicalSealService.drawSigil(this.seal.literalSeal??'');
-        this.toastr.showSuccess(this.sigilLaunchedMessage, this.sigilLaunchedMessageTitle);
-      } else {
-        this.toastr.showError(this.sigilNotLaunchedMessage, this.sigilNotLaunchedMessageTitle);
-      }
-    }));
+    this._subscription.add(this.facade.openConfirmationDialog(this.readyToChargeQuestion, this.questionTitle)
+      .subscribe((launch: boolean) => {
+        if(!launch) {
+          return;
+        }
+
+        this._subscription.add(this.facade.openChargeAndLaunchDialog().subscribe((data: boolean) => {
+          if(data) {
+            this.statement = '';
+            this.seal = this.facade.getSeal(this.statement);
+            this.facade.drawSigil(this.seal.literalSeal??'');
+            this.facade.showSuccessToaster(this.sigilLaunchedMessage, this.sigilLaunchedMessageTitle);
+          } else {
+            this.facade.showErrorToaster(this.sigilNotLaunchedMessage, this.sigilNotLaunchedMessageTitle);
+          }
+        }));
+      }));
   }
 
   private getTranslations(): void {
-    this._subscription.add(this.translate.get("SIGILS").subscribe(data => {
+    if(this.sigilLaunchedMessage) {
+      return;
+    }
+
+    const subscr = this.facade.getTranslations("SIGILS").subscribe(data => {
       this.sigilLaunchedMessage = data.SIGIL_LAUNCHED_CONFIRMATION_MESSAGE;
       this.sigilLaunchedMessageTitle = data.SIGIL_LAUNCHED_CONFIRMATION_MESSAGE_TITLE;
       this.sigilNotLaunchedMessage = data.SIGIL_NOT_LAUNCHED_MESSAGE;
       this.sigilNotLaunchedMessageTitle = data.SIGIL_NOT_LAUNCHED_MESSAGE_TITLE;
-    }));
+      this.readyToChargeQuestion = data.READY_TO_CHARGE_QUESTION;
+      this.questionTitle = data.QUESTION;
+    });
+
+    this._subscription.add(subscr);
   }
 }

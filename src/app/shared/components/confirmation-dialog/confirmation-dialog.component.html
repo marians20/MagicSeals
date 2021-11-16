@@ -1,0 +1,17 @@
+<div mat-dialog-title mat-dialog-draggable-title color="primary">
+  <span>{{data.title}}</span>
+  <span><button mat-icon-button (click)="handleCloseDialog(false)">
+    <mat-icon>close</mat-icon>
+  </button></span>
+</div>
+
+<div mat-dialog-content >
+  <p>{{data.message}}</p>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-stroked-button color="primary"
+    (click)="handleCloseDialog(true)"><mat-icon>check</mat-icon></button>
+    <button mat-stroked-button color="error"
+    (click)="handleCloseDialog(false)"><mat-icon>close</mat-icon></button>
+</div>

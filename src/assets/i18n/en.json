@@ -25,6 +25,8 @@
     "SIGIL_LAUNCHED_CONFIRMATION_MESSAGE": "The sigil has been successfully launched!",
     "SIGIL_LAUNCHED_CONFIRMATION_TITLE": "Congratulations!",
     "SIGIL_NOT_LAUNCHED_MESSAGE": "The sigil has NOT been launched...",
-    "SIGIL_NOT_LAUNCHED_TITLE": "Oops!"
+    "SIGIL_NOT_LAUNCHED_TITLE": "Oops!",
+    "READY_TO_CHARGE_QUESTION": "Are you ready to charge and launch the sigil?",
+    "QUESTION": "Question"
   }
 }

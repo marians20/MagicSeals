@@ -31,5 +31,4 @@ export class ChargeAndLaunchComponent implements OnInit, OnDestroy {
   handleCloseDialog(value: boolean) {
     this.chargeAndLaunchService.closeDialog(value);
   }
-
 }

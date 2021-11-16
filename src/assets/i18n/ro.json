@@ -25,7 +25,9 @@
     "SIGIL_LAUNCHED_CONFIRMATION_MESSAGE": "Sigiliul a fost lansat cu success!",
     "SIGIL_LAUNCHED_CONFIRMATION_TITLE": "Felicitări!",
     "SIGIL_NOT_LAUNCHED_MESSAGE": "Sigiliul NU a fost lansat",
-    "SIGIL_NOT_LAUNCHED_TITLE": "Oops!"
+    "SIGIL_NOT_LAUNCHED_TITLE": "Oops!",
+    "READY_TO_CHARGE_QUESTION": "Sunteti pregatit(a) sa incarcati si sa lansati sigiliul?",
+    "QUESTION": "Intrebare"
 
   }
 }
