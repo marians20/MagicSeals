@@ -11,8 +11,8 @@ import { SealsComponent } from './components/seals/seals.component';
 import { StrategySelectorComponent } from './components/strategy-selector/strategy-selector.component';
 import { GraphicalSealComponent } from './components/graphical-seal/graphical-seal.component';
 import { ChargeAndLaunchComponent } from './components/charge-and-launch/charge-and-launch.component';
-import { DialogDraggableTitleDirective } from './directives/dialog-draggable-title.directive';
 import { HttpLoaderFactory } from 'src/app/app.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,8 +20,7 @@ import { HttpLoaderFactory } from 'src/app/app.module';
     SealComponent,
     StrategySelectorComponent,
     GraphicalSealComponent,
-    ChargeAndLaunchComponent,
-    DialogDraggableTitleDirective
+    ChargeAndLaunchComponent
   ],
   imports: [
     CommonModule,
@@ -34,6 +33,7 @@ import { HttpLoaderFactory } from 'src/app/app.module';
         deps: [HttpClient]
       }
     }),
+    SharedModule,
     SealsRoutingModule
   ],
   exports: [

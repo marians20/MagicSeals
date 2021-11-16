@@ -10,11 +10,11 @@ export class ChargeAndLaunchService {
 
   constructor(private readonly dialog: MatDialog) { }
 
-  openDialog() {
+  openDialog(title: string) {
     this.dialogRef = this.dialog.open(ChargeAndLaunchComponent, {
       width: '600px',
       data: {
-        bitmap:'',
+        title,
       },
     });
 

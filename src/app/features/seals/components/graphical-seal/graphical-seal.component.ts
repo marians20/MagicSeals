@@ -31,7 +31,7 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestr
 
       this._subscription.add(this.graphicalSealService.onGetImageRequest.subscribe(() => {
         this.graphicalSealService.image = this.getJpeg();
-      }));      
+      }));
      }
 
   ngOnInit(): void {
@@ -47,6 +47,8 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestr
       console.log('Unable to create context.');
       return;
     }
+
+    this.ctx.imageSmoothingEnabled = true;
     this.canvasSize = new Size2D(this.canvas.nativeElement.height, this.canvas.nativeElement.width);
     this.sealRadius = Math.min(this.canvasSize.width, this.canvasSize.height) / 2 - this.padding;
 
@@ -131,6 +133,7 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestr
   }
 
   private initStroke(strokeStyle: string | CanvasGradient | CanvasPattern, lineWidth: number): void {
+    this.ctx!.lineCap = 'round';
     this.ctx!.beginPath();
     this.ctx!.strokeStyle = strokeStyle;
     this.ctx!.lineWidth = lineWidth;

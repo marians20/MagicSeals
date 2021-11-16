@@ -36,7 +36,7 @@ export class SealsComponentFacade {
 
   drawSigil = (literalSigil: string) => this.graphicalSealService.drawSigil(literalSigil);
 
-  openChargeAndLaunchDialog = () => this.chargeAndLaunchService.openDialog();
+  openChargeAndLaunchDialog = (title: string) => this.chargeAndLaunchService.openDialog(title);
 
   showSuccessToaster = (message: string, title?: string) => this.toastr.showSuccess(message, title);
 

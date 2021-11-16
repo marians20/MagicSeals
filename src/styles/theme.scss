@@ -38,3 +38,11 @@ $angular-dark-theme: mat.define-dark-theme(
 $primary: mat-color($angular-primary);
 $accent: mat-color($angular-accent);
 $warn: mat-color($angular-warn);
+
+.mat-dialog-title {
+  background-color: $primary;
+}
+
+mat-dialog-container {
+  background-color: mat.get-color-from-palette($angular-primary, card) !important;
+}

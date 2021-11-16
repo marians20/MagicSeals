@@ -49,7 +49,7 @@ export class SealsComponent implements OnInit, OnDestroy {
           return;
         }
 
-        this._subscription.add(this.facade.openChargeAndLaunchDialog().subscribe((data: boolean) => {
+        this._subscription.add(this.facade.openChargeAndLaunchDialog(this.seal.literalSeal ?? '').subscribe((data: boolean) => {
           if(data) {
             this.statement = '';
             this.seal = this.facade.getSeal(this.statement);

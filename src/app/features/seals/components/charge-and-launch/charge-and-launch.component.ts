@@ -1,5 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+
 import { ChargeAndLaunchService } from '../../services/charge-and-launch.service';
 import { GraphicalSealService } from '../../services/graphical-seal.service';
 
@@ -14,7 +16,8 @@ export class ChargeAndLaunchComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly chargeAndLaunchService: ChargeAndLaunchService,
-    private readonly graphicalSealService: GraphicalSealService) {
+    private readonly graphicalSealService: GraphicalSealService,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
       this._subscription.add(this.graphicalSealService.onImageGot.subscribe(img => {
         this.image = img;
       }));
