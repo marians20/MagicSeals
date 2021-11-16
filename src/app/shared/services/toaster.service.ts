@@ -21,4 +21,18 @@ export class ToasterService {
       positionClass: 'toast-top-full-width'
     });
   }
+
+  showWarning(message: string, title?: string) {
+    this.toastr.warning(message, title, {
+      progressBar: true,
+      positionClass: 'toast-top-full-width'
+    });
+  }
+
+  showError(message: string, title?: string) {
+    this.toastr.error(message, title, {
+      progressBar: true,
+      positionClass: 'toast-top-full-width'
+    });
+  }
 }

@@ -23,6 +23,8 @@
     "CHARGE": "Charge the sigil",
     "LAUNCH": "Launch the sigil!",
     "SIGIL_LAUNCHED_CONFIRMATION_MESSAGE": "The sigil has been successfully launched!",
-    "SIGIL_LAUNCHED_CONFIRMATION_TITLE": "Congratulations!"
+    "SIGIL_LAUNCHED_CONFIRMATION_TITLE": "Congratulations!",
+    "SIGIL_NOT_LAUNCHED_MESSAGE": "The sigil has NOT been launched...",
+    "SIGIL_NOT_LAUNCHED_TITLE": "Oops!"
   }
 }

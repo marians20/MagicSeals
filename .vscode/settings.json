@@ -1,5 +1,8 @@
 {
     "cSpell.words": [
         "valueobject"
+    ],
+    "i18n-ally.localesPaths": [
+        "src/assets/i18n"
     ]
 }

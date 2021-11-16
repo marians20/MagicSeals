@@ -18,6 +18,8 @@ import { ToasterService } from 'src/app/shared/services/toaster.service';
 export class SealsComponent implements OnInit, OnDestroy {
   private _subscription: Subscription = new Subscription();
   private sigilLaunchedMessage!: string;
+  private sigilNotLaunchedMessageTitle!: string;
+  private sigilNotLaunchedMessage!: string;
   private sigilLaunchedMessageTitle!: string;
   statement: string = ''
   seal: Seal = {}
@@ -58,15 +60,18 @@ export class SealsComponent implements OnInit, OnDestroy {
         this.seal = this.sealsService.getSeal(this.statement, this.strategyService.strategy);
         this.graphicalSealService.drawSigil(this.seal.literalSeal??'');
         this.toastr.showSuccess(this.sigilLaunchedMessage, this.sigilLaunchedMessageTitle);
+      } else {
+        this.toastr.showError(this.sigilNotLaunchedMessage, this.sigilNotLaunchedMessageTitle);
       }
     }));
   }
 
   private getTranslations(): void {
     this._subscription.add(this.translate.get("SIGILS").subscribe(data => {
-      console.log(data);
       this.sigilLaunchedMessage = data.SIGIL_LAUNCHED_CONFIRMATION_MESSAGE;
       this.sigilLaunchedMessageTitle = data.SIGIL_LAUNCHED_CONFIRMATION_MESSAGE_TITLE;
+      this.sigilNotLaunchedMessage = data.SIGIL_NOT_LAUNCHED_MESSAGE;
+      this.sigilNotLaunchedMessageTitle = data.SIGIL_NOT_LAUNCHED_MESSAGE_TITLE;
     }));
   }
 }
