@@ -1,5 +1,17 @@
-<div *ngIf="isAuthenticated" class=logout-component>
-  <span>{{'HEADER.WELCOME' | translate}}, {{user?.firstName}}</span>
-  <span><img class="picture" [src]="user?.photoUrl"></span>
-  <button mat-icon-button (click)="logout()"><mat-icon>logout</mat-icon></button>
+<div *ngIf="isAuthenticated" class="logout-component">
+  <!-- <span>{{'HEADER.WELCOME' | translate}}, {{user?.firstName}}</span> -->
+  <span>
+    <img
+      class="picture"
+      [src]="user?.photoUrl"
+      [matTooltip]="user?.name || ''"
+      [matTooltipPosition]="'below'"
+      matTooltipHideDelay="tooltipHideDelay"
+  /></span>
+  <button mat-icon-button (click)="logout()"
+    [matTooltip]="'logout'"
+    [matTooltipPosition]="'below'"
+  >
+    <mat-icon>logout</mat-icon>
+  </button>
 </div>
