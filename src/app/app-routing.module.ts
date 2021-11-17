@@ -12,6 +12,10 @@ const routes: Routes = [
     redirectTo: 'dashboard'
   },
   {
+    path: 'layout',
+    loadChildren: () => import('./layout/layout.module').then(m => m.LayoutModule)
+  },
+  {
     path: 'seals',
     loadChildren: () => import('./features/seals/seals.module').then(m => m.SealsModule)
   }

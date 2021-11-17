@@ -1,7 +1,8 @@
 {
   "HEADER": {
     "TITLE": "Magical Sigils",
-    "DARK_MODE": "Dark mode"
+    "DARK_MODE": "Dark mode",
+    "WELCOME": "Welcome"
   },
   "DASHBOARD": {
     "SIGIL": "Sigil",

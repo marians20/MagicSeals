@@ -1,0 +1,61 @@
+<mat-card>
+  <mat-card-title>
+    <h2 class="text-center mb-5">Login</h2>
+  </mat-card-title>
+  <mat-card-content>
+    <!-- <form *ngIf="isAuthenticated === true" class="example-form">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input
+          matInput
+          readonly
+          id="firstname"
+          placeholder="First Name"
+          [value]="socialUser.firstName"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input
+          matInput
+          readonly
+          id="lastname"
+          placeholder="Last Name"
+          [value]="socialUser.lastName"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          readonly
+          id="email"
+          placeholder="Email"
+          [value]="socialUser.email"
+        />
+      </mat-form-field>
+    </form> -->
+  </mat-card-content>
+  <mat-card-actions>
+    <button
+      *ngIf="isAuthenticated === false"
+      mat-stroked-button
+      color="primary"
+      (click)="loginWithGoogle()"
+      class="btn btn-danger"
+    >
+      Login with Google
+    </button>
+    <button
+      *ngIf="isAuthenticated === true"
+      mat-stroked-button
+      type="button"
+      (click)="logOut()"
+      class="btn btn-primary"
+    >
+      Log Out
+    </button>
+  </mat-card-actions>
+</mat-card>
