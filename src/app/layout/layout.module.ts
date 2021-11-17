@@ -13,6 +13,9 @@ import { SealsModule } from '../features/seals/seals.module';
 import { HttpLoaderFactory } from '../app.module';
 import { LanguageSelectorComponent } from './components/language-selector/language-selector.component';
 import { DarkModeSelectorComponent } from './components/dark-mode-selector/dark-mode-selector.component';
+import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -21,11 +24,14 @@ import { DarkModeSelectorComponent } from './components/dark-mode-selector/dark-
     PageNotFoundComponent,
     SidebarComponent,
     LanguageSelectorComponent,
-    DarkModeSelectorComponent
+    DarkModeSelectorComponent,
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
+    ReactiveFormsModule,
         TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

@@ -31,6 +31,10 @@ export class SealsComponent implements OnInit, OnDestroy {
       this.seal = this.facade.getSeal(this.statement);
       this.facade.drawSigil(this.seal.literalSeal!);
     }));
+
+    this._subscription.add(this.facade.onLoggedOut.subscribe(() => {
+      this.facade.navigate(['dashboard']);
+    }));
   }
 
   ngOnDestroy(): void {
@@ -49,16 +53,17 @@ export class SealsComponent implements OnInit, OnDestroy {
           return;
         }
 
-        this._subscription.add(this.facade.openChargeAndLaunchDialog(this.seal.literalSeal ?? '').subscribe((data: boolean) => {
-          if(data) {
-            this.statement = '';
-            this.seal = this.facade.getSeal(this.statement);
-            this.facade.drawSigil(this.seal.literalSeal??'');
-            this.facade.showSuccessToaster(this.sigilLaunchedMessage, this.sigilLaunchedMessageTitle);
-          } else {
-            this.facade.showErrorToaster(this.sigilNotLaunchedMessage, this.sigilNotLaunchedMessageTitle);
-          }
-        }));
+        this._subscription.add(this.facade.openChargeAndLaunchDialog(this.seal.literalSeal ?? '')
+          ?.subscribe((data: boolean) => {
+            if(data) {
+              this.statement = '';
+              this.seal = this.facade.getSeal(this.statement);
+              this.facade.drawSigil(this.seal.literalSeal??'');
+              this.facade.showSuccessToaster(this.sigilLaunchedMessage, this.sigilLaunchedMessageTitle);
+            } else {
+              this.facade.showErrorToaster(this.sigilNotLaunchedMessage, this.sigilNotLaunchedMessageTitle);
+            }
+          }));
       }));
   }
 

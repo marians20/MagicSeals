@@ -1,11 +1,14 @@
 import { Injectable, Injector } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
-import { ToasterService } from "src/app/shared/services/toaster.service";
+import { Router } from "@angular/router";
+
+import { ToasterService } from "../../../../shared/services/toaster.service";
 import { ChargeAndLaunchService } from "../../services/charge-and-launch.service";
 import { GraphicalSealService } from "../../services/graphical-seal.service";
 import { SealsService } from "../../services/seals.service";
 import { StrategySelectorService } from "../../services/strategy-selector.service";
 import { ConfirmationDialogService } from '../../../../shared/services/confirmation-dialog.service';
+import { AuthService } from '../../../../shared/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +21,8 @@ export class SealsComponentFacade {
   private _toastr: ToasterService | undefined;
   private _translate: TranslateService | undefined;
   private _confirmation: ConfirmationDialogService | undefined;
+  private _auth: AuthService | undefined;
+  private _router: Router | undefined;
 
   constructor(private readonly injector: Injector){}
 
@@ -27,6 +32,10 @@ export class SealsComponentFacade {
 
   get onLangChange() {
     return this.translate.onLangChange;
+  }
+
+  get onLoggedOut() {
+    return this.auth.onLoggedOut;
   }
 
   getTranslations = (key: string) => this.translate.get(key);
@@ -43,6 +52,8 @@ export class SealsComponentFacade {
   showErrorToaster = (message: string, title?: string) => this.toastr.showError(message, title);
 
   openConfirmationDialog = (message: string, title: string) => this.confirmation.openDialog(message, title);
+
+  navigate = (args: string[]) => this.router.navigate(args);
 
   private get sealsService(): SealsService {
     if(!this._sealsService) {
@@ -98,5 +109,21 @@ export class SealsComponentFacade {
     }
 
     return this._confirmation;
+  }
+
+  private get auth(): AuthService {
+    if(!this._auth) {
+      this._auth = this.injector.get(AuthService);
+    }
+
+    return this._auth;
+  }
+
+  private get router(): Router {
+    if(!this._router) {
+      this._router = this.injector.get(Router);
+    }
+
+    return this._router;
   }
 }

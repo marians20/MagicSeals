@@ -1,7 +1,8 @@
 {
   "HEADER": {
     "TITLE": "Sigilii magice",
-    "DARK_MODE": "Mod întunecat"
+    "DARK_MODE": "Mod întunecat",
+    "WELCOME": "Bine ai venit"
   },
   "DASHBOARD": {
     "SIGIL": "Sigiliu",

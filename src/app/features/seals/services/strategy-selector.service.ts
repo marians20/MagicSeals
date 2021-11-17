@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { SealStrategy } from '../models/seal-strategy.enum';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { SealStrategy } from '../models/seal-strategy.enum';
 export class StrategySelectorService {
   private _strategy: SealStrategy;
   onStrategyChange = new Subject<SealStrategy>();
-  constructor() {
+  constructor(private readonly auth: AuthService) {
     this._strategy = Number(localStorage.getItem('sealStrstegy')) ?? SealStrategy.RemovePairs;
   }
 
@@ -19,6 +20,10 @@ export class StrategySelectorService {
 
   set strategy(value: SealStrategy) {
     if(this._strategy === value) {
+      return;
+    }
+
+    if(!this.auth.isAuthenticated) {
       return;
     }
 

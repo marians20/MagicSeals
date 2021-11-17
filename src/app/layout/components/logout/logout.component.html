@@ -1,0 +1,5 @@
+<div *ngIf="isAuthenticated" class=logout-component>
+  <span>{{'HEADER.WELCOME' | translate}}, {{user?.firstName}}</span>
+  <span><img class="picture" [src]="user?.photoUrl"></span>
+  <button mat-icon-button (click)="logout()"><mat-icon>logout</mat-icon></button>
+</div>

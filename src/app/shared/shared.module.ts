@@ -14,7 +14,7 @@ import { DialogDraggableTitleDirective } from './directives/dialog-draggable-tit
   imports: [
     CommonModule,
     FormsModule,
-    MaterialModule
+    MaterialModule,
   ],
   exports: [
     DialogDraggableTitleDirective
