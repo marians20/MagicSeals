@@ -59,7 +59,7 @@ export function tokenGetter() {
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '239723469023-ifcfff844ri2lo8cfn0d9p59ng2jdlpj.apps.googleusercontent.com'
+              'Google-Client-ID-Goes-Here'
             )
           }
         ]
