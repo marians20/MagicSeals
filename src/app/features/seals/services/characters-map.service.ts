@@ -14,7 +14,9 @@ private readonly circles: number[][];
    }
 
   getPoints = (sigil: string, zoomRatio: number) =>
-   this.getPolarCoordinates(sigil, zoomRatio).map(point => point.toCartezian());
+   this.getPolarCoordinates(sigil, zoomRatio)
+    .map(point => point.toCartezian())
+    .map(p => p.translate(zoomRatio, zoomRatio));
 
   private getPolarCoordinates(sigil: string, zoomRatio: number): PolarPoint[]{
     if(! sigil) {
@@ -36,7 +38,7 @@ private readonly circles: number[][];
     const doubleCirclesCount = this.circles.length * 2;
     return new PolarPoint(
       2 * Math.PI * indexInTheCircle/circleLength - Math.PI / 2 + Math.PI / circleLength,
-      (doubleCirclesCount - circleIndex - 1) / doubleCirclesCount
+      (doubleCirclesCount - (2 * circleIndex) - 1) / doubleCirclesCount
     );
   }
 

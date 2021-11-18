@@ -1,9 +1,10 @@
 import { AfterContentInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { Size2D, Point } from '../../models';
+import { Point } from '../../models';
 import { Segment } from '../../models/segment';
 import { CharactersMapService } from '../../services/characters-map.service';
+import { DrawService } from '../../services/draw.service';
 import { GraphicalSealService } from '../../services/graphical-seal.service';
 
 @Component({
@@ -15,27 +16,28 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestr
   @Input() backgroundColor = '#FFFFFF';
   @Input() foreColor = '#FFFF00';
   @Input() lineWidth: number = 2;
+  @Input() shouldDrawMap: boolean = false;
+
   @ViewChild('canvas', { static: true }) canvas!: ElementRef<HTMLCanvasElement>;
 
   private readonly _subscription: Subscription = new Subscription();
-  private ctx: CanvasRenderingContext2D | undefined | null;
-  private canvasSize: Size2D = new Size2D();
-  private sealRadius!: number;
+  private sigilRadius!: number;
   private padding: number = 4;
   constructor(
     private readonly mapService: CharactersMapService,
-    private readonly graphicalSealService: GraphicalSealService) {
-      this._subscription.add(this.graphicalSealService.onDrawSigilRequest.subscribe(literalSigil => {
+    private readonly graphicalSigilService: GraphicalSealService,
+    private readonly draw: DrawService) {
+      this._subscription.add(this.graphicalSigilService.onDrawSigilRequest.subscribe(literalSigil => {
         this.drawSigil(literalSigil);
       }));
 
-      this._subscription.add(this.graphicalSealService.onGetImageRequest.subscribe(() => {
-        this.graphicalSealService.image = this.getJpeg();
+      this._subscription.add(this.graphicalSigilService.onGetImageRequest.subscribe(() => {
+        this.graphicalSigilService.image = this.getJpeg();
       }));
      }
 
   ngOnInit(): void {
-    this.ctx = this.canvas.nativeElement.getContext('2d');
+    this.draw.ctx = this.canvas.nativeElement.getContext('2d')!;
   }
 
   ngOnDestroy(): void {
@@ -43,100 +45,59 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestr
   }
 
   ngAfterContentInit(): void {
-    if(!this.ctx) {
+    if(!this.draw.ctx) {
       console.log('Unable to create context.');
       return;
     }
-
-    this.ctx.imageSmoothingEnabled = true;
-    this.canvasSize = new Size2D(this.canvas.nativeElement.height, this.canvas.nativeElement.width);
-    this.sealRadius = Math.min(this.canvasSize.width, this.canvasSize.height) / 2 - this.padding;
+    this.draw.ctx.imageSmoothingEnabled = true;
+    this.sigilRadius = Math.min(this.draw.canvasSize.width, this.draw.canvasSize.height) / 2 - this.padding;
 
     this.drawSigil('');
   }
 
   public drawSigil(literalSigil: string) {
-    this.ctx!.clearRect(0, 0, this.canvasSize.width, this.canvasSize.height);
-    this.drawBackground();
-    //this.drawBorder();
-    this.drawSealCircle();
-
-    const points = this.mapService.getPoints(literalSigil, this.sealRadius)
-    .map(p => p.translate(this.sealRadius, this.sealRadius));
+    this.drawScene();
+    const points = this.mapService.getPoints(literalSigil, this.sigilRadius);
     if(points.length === 0) {
       return;
     }
-    const startSealCircleRadius = Math.min(this.canvasSize.height, this.canvasSize.width) / 50;
-    this.drawCircle(points[0], startSealCircleRadius);
+    const startSealCircleRadius = Math.min(this.draw.canvasSize.height, this.draw.canvasSize.width) / 50;
+    this.draw.drawCircle(points[0], startSealCircleRadius, this.foreColor, this.lineWidth);
 
     if(points.length < 2) {
       return;
     }
 
-    this.drawSealSegments(points, startSealCircleRadius);
-
-    this.drawSegment(this.getSealTerminator(new Segment(points.slice(-2)[0], points.slice(-1)[0]), startSealCircleRadius));
+    this.draw.drawPLine([this.trimLineToCircle(points[0], points[1], startSealCircleRadius), ...points.slice(1)], this.foreColor, this.lineWidth);
+    this.draw.drawSegment(this.getSealTerminator(new Segment(points.slice(-2)[0], points.slice(-1)[0]), startSealCircleRadius), this.foreColor, this.lineWidth);
   }
 
-  public getBitmap() {
-    return this.ctx!
-    .getImageData(0, 0, this.canvasSize.height, this.canvasSize.width).data;
-    this.canvas.nativeElement.toDataURL("image/jpeg", 1.0).replace("data:image/jpeg;base64,","");
+  public drawMap() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const charHeight = this.draw.ctx.measureText('M').width;
+    const charWidth = this.draw.ctx.measureText('M').width;
+    const points = this.mapService.getPoints(chars, this.sigilRadius)
+      .map(p => p.translate(- charWidth / 2, charHeight / 2));
+
+    this.draw.initStroke(this.foreColor, this.lineWidth);
+    this.draw.ctx.fillStyle = this.foreColor;
+
+    [...chars].forEach((char, index) => {
+      this.draw.fillText(char, points[index]);
+    })
   }
 
   public getJpeg() {
-    return this.canvas.nativeElement
-      .toDataURL("image/jpeg", 1.0);
-      //.replace("data:image/jpeg;base64,","");
+    return this.draw.getJpeg();
   }
 
-  private drawBackground(): void {
-    this.ctx!.fillStyle = this.backgroundColor;
-    this.ctx!.fillRect(0, 0, this.canvasSize.width, this.canvasSize.height);
-  }
-
-  private drawBorder(): void {
-    this.initStroke(this.foreColor, this.lineWidth)
-    this.ctx!.rect(0, 0, this.canvasSize.width, this.canvasSize.height);
-    this.ctx!.stroke();
-  }
-
-  private drawSealCircle(): void {
-    this.drawCircle(new Point(this.canvasSize.width / 2, this.canvasSize.height / 2), this.sealRadius)
-  }
-
-  private drawSealSegments(points: Point[], startSealCircleRadius: number) {
-    const firstPoint = this.trimLineToCircle(points[0], points[1], startSealCircleRadius);
-    this.initStroke(this.foreColor, this.lineWidth);
-    this.ctx!.moveTo(firstPoint.x, firstPoint.y);
-    for(let i = 1; i < points.length; i++) {
-      this.ctx!.lineTo(points[i].x, points[i].y);
+  private drawScene() {
+    this.draw.clearRectangle(new Point(0, 0), new Point(this.draw.canvasSize.width, this.draw.canvasSize.height));
+    this.draw.fillRectangle(new Point(0, 0), new Point(this.draw.canvasSize.width, this.draw.canvasSize.height), this.backgroundColor);
+    this.draw.drawCircle(new Point(this.draw.canvasSize.width / 2, this.draw.canvasSize.height / 2), this.sigilRadius, this.foreColor, this.lineWidth);
+    if(this.shouldDrawMap) {
+      this.drawMap();
     }
-    this.ctx!.stroke();
-  }
-
-  private drawCircle(center: Point, radius: number): void {
-    this.initStroke(this.foreColor, this.lineWidth);
-    this.ctx!.arc(center.x, center.y, radius, 0, Math.PI * 2);
-    this.ctx!.stroke();
-  }
-
-  private drawSegment(segment: Segment) {
-    this.drawLine(segment.p1, segment.p2);
-  }
-
-  private drawLine(p1: Point, p2: Point) {
-    this.initStroke(this.foreColor, this.lineWidth);
-    this.ctx!.moveTo(p1.x, p1.y);
-    this.ctx!.lineTo(p2.x, p2.y);
-    this.ctx!.stroke();
-  }
-
-  private initStroke(strokeStyle: string | CanvasGradient | CanvasPattern, lineWidth: number): void {
-    this.ctx!.lineCap = 'round';
-    this.ctx!.beginPath();
-    this.ctx!.strokeStyle = strokeStyle;
-    this.ctx!.lineWidth = lineWidth;
   }
 
   private trimLineToCircle(p1: Point, p2: Point, radius: number): Point {
