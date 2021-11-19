@@ -17,13 +17,9 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestr
   constructor(
     private readonly graphicalSigilService: GraphicalSigilService
   ) {
-      this._subscription.add(this.graphicalSigilService.onDrawSigilRequest.subscribe(literalSigil => {
-        this.graphicalSigilService.drawSigil(literalSigil);
-      }));
-
-      this._subscription.add(this.graphicalSigilService.onGetImageRequest.subscribe(() => {
-        this.graphicalSigilService.image = this.graphicalSigilService.getJpeg();
-      }));
+      // this._subscription.add(this.graphicalSigilService.onGetImageRequest.subscribe(() => {
+      //   this.graphicalSigilService.image = this.graphicalSigilService.getJpeg();
+      // }));
      }
 
   ngOnInit(): void {

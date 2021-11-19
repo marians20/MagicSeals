@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Point, Segment, Size2D } from '../models';
 import { StrokeStyle } from '../models/seal.options';
+import { PositionedText } from '../models/positioned-text.model';
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +68,17 @@ export class DrawService {
 
   fillText(text: string, point: Point) {
     this._ctx.fillText(text, point.x, point.y);
+  }
+
+  fillTexts(texts: PositionedText[], strokeStyle: StrokeStyle, lineWidth: number) {
+    this.initStroke(strokeStyle, lineWidth);
+    this.ctx.fillStyle = strokeStyle;
+
+    [...texts].forEach((text, index) => {
+      this.fillText(text.text, text.position);
+    });
+
+    this._ctx.stroke();
   }
 
   initStroke(strokeStyle: StrokeStyle, lineWidth: number): void {

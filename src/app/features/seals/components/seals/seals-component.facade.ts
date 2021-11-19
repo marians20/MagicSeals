@@ -43,7 +43,7 @@ export class SealsComponentFacade {
   getSeal = (statement: string) =>
     this.sealsService.getSeal(statement, this.strategyService.strategy);
 
-  drawSigil = (literalSigil: string) => this.graphicalSealService.requestDrawSigil(literalSigil);
+  drawSigil = (literalSigil: string) => this.graphicalSealService.drawSigil(literalSigil);
 
   openChargeAndLaunchDialog = (title: string) => this.chargeAndLaunchService.openDialog(title);
 

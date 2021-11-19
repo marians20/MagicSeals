@@ -17,14 +17,10 @@ export class ChargeAndLaunchComponent implements OnInit, OnDestroy {
   constructor(
     private readonly chargeAndLaunchService: ChargeAndLaunchService,
     private readonly graphicalSealService: GraphicalSigilService,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-      this._subscription.add(this.graphicalSealService.onImageGot.subscribe(img => {
-        this.image = img;
-      }));
-    }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    this.graphicalSealService.getImage();
+    this.image = this.graphicalSealService.getJpeg();
   }
 
   ngOnDestroy(): void {

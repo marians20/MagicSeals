@@ -5,6 +5,7 @@ import { Point, Segment } from '../models';
 import { SealOptions } from '../models/seal.options';
 import { CharactersMapService } from './characters-map.service';
 import { DrawService } from './draw.service';
+import { PositionedText } from '../models/positioned-text.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,27 +16,13 @@ export class GraphicalSigilService {
   private _sigilRadius!: number;
   private lineWidth!: number;
   private _padding!: number;
-  private _image: string = '';
   private _canvas!: HTMLCanvasElement;
   private _literalSigil!: string;
-
-  onDrawSigilRequest: Subject<string> = new Subject();
-  onGetImageRequest: Subject<void> = new Subject();
-  onImageGot: Subject<string> = new Subject();
 
   constructor(
     private readonly mapService: CharactersMapService,
     private readonly draw: DrawService
   ) { }
-
-  set image(value: string) {
-    this._image = value;
-    this.onImageGot.next(this._image);
-  }
-
-  get image(): string {
-    return this._image;
-  }
 
   set canvas(value: HTMLCanvasElement) {
     if(!value) {
@@ -58,10 +45,6 @@ export class GraphicalSigilService {
     this.lineWidth = Math.ceil(size / 80);
   }
 
-  requestDrawSigil(literalSigil: string): void {
-    this.onDrawSigilRequest.next(literalSigil);
-  }
-
   drawSigil(literalSigil: string) {
     this._literalSigil = literalSigil;
     this.drawScene();
@@ -80,11 +63,6 @@ export class GraphicalSigilService {
     this.draw.drawSegment(this.getSealTerminator(new Segment(points.slice(-2)[0], points.slice(-1)[0]), startSealCircleRadius), this.options.sigilColor, this.lineWidth);
   }
 
-  getImage() {
-    this.onGetImageRequest.next();
-  }
-
-
   getJpeg() {
     const originalCanvas = this._canvas;
     const virtualCanvas: HTMLCanvasElement = document.createElement('canvas');
@@ -98,23 +76,6 @@ export class GraphicalSigilService {
     return result;
   }
 
-  private drawMap() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const fontSize = `${this.lineWidth * 4}px`;
-    this.ctx.font = `${fontSize} ${this.ctx.font.split(' ')[1]}`;
-    const charHeight = this.draw.ctx.measureText('M').width;
-    const charWidth = this.draw.ctx.measureText('M').width;
-    const points = this.mapService.getPoints(chars, this._sigilRadius)
-      .map(p => p.translate(- charWidth / 2, charHeight / 2));
-
-    this.draw.initStroke(this.options.mapColor, this.lineWidth);
-    this.draw.ctx.fillStyle = this.options.mapColor;
-
-    [...chars].forEach((char, index) => {
-      this.draw.fillText(char, points[index]);
-    })
-  }
-
   private drawScene() {
     this.draw.clearRectangle(new Point(0, 0), new Point(this.draw.canvasSize.width, this.draw.canvasSize.height));
     this.draw.fillRectangle(new Point(0, 0), new Point(this.draw.canvasSize.width, this.draw.canvasSize.height), this.options.backgroundColor);
@@ -122,6 +83,22 @@ export class GraphicalSigilService {
     if(this.options.shouldDrawMap) {
       this.drawMap();
     }
+  }
+
+  private drawMap() {
+    const chars = this.mapService.getAllCharacters();
+    const fontSize = `${this.lineWidth * 4}px`;
+    this.ctx.font = `${fontSize} ${this.ctx.font.split(' ')[1]}`;
+    const charHeight = this.draw.ctx.measureText('M').width;
+    const charWidth = this.draw.ctx.measureText('M').width;
+
+    const positionedTexts = this.mapService.getPoints(chars, this._sigilRadius)
+      .map(p => p.translate(- charWidth / 2, charHeight / 2))
+      .map((point, index) => {
+        return {position: point, text: chars[index]} as PositionedText;
+      });
+
+      this.draw.fillTexts(positionedTexts, this.options.mapColor, this.lineWidth);
   }
 
   private trimLineToCircle(p1: Point, p2: Point, radius: number): Point {

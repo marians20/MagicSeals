@@ -18,6 +18,11 @@ private readonly circles: number[][];
     .map(point => point.toCartezian())
     .map(p => p.translate(zoomRatio, zoomRatio));
 
+  getAllCharacters(): string {
+    return this.range(this.ascii('A'), this.ascii('Z'))
+      .map(code => this.char(code)).join('');
+  }
+
   private getPolarCoordinates(sigil: string, zoomRatio: number): PolarPoint[]{
     if(! sigil) {
       return [];
@@ -42,17 +47,20 @@ private readonly circles: number[][];
     );
   }
 
-  private getCircles(circleBorders: string[]) {
+  private getCircles(circleBorders: string[]): number[][] {
     const circlesBordersCodes = circleBorders.map(c => this.ascii(c));
-    const circles = [this.range(this.ascii('A'), circlesBordersCodes[0])];
+    const circles = [this.range(this.ascii('A'), circlesBordersCodes[0] - 1)];
+
     for(let i = 0; i < circlesBordersCodes.length; i++) {
       circles.push(this.range(
         circlesBordersCodes[i],
         i < circlesBordersCodes.length - 1
-          ? circlesBordersCodes[i + 1]
-          : this.ascii('Z') + 1
+          ? circlesBordersCodes[i + 1] - 1
+          : this.ascii('Z')
         ));
     }
+
+    console.log(circles);
     return circles;
   }
 
@@ -72,9 +80,11 @@ private readonly circles: number[][];
 
   private ascii = (letter: string) => letter.charCodeAt(0);
 
+  private char = (charCode: number) => String.fromCharCode(charCode);
+
   private range(from: number, to: number): number[] {
     const result: number[] = [];
-    for(let i = from; i < to; i++) {
+    for(let i = from; i <= to; i++) {
       result.push(i);
     }
 

@@ -35,7 +35,7 @@ export class SealComponent implements OnInit {
     this._subscription.add(this.layoutService.onDarkModeToggle.subscribe(isDarkMode => {
       this.options.sigilColor = isDarkMode ? 'white': 'black';
       this.options.backgroundColor = isDarkMode ? 'black': 'white';
-      setTimeout(() => this.graphicalSealService.requestDrawSigil(this.seal.literalSeal!), 0);
+      setTimeout(() => this.graphicalSealService.drawSigil(this.seal.literalSeal!), 0);
     }));
   }
 }
