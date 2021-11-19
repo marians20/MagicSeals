@@ -47,24 +47,17 @@ export class SealsComponent implements OnInit, OnDestroy {
   }
 
   handleChargeClick() {
-    this._subscription.add(this.facade.openConfirmationDialog(this.readyToChargeQuestion, this.questionTitle)
-      .subscribe((launch: boolean) => {
-        if(!launch) {
-          return;
+    this._subscription.add(this.facade.openChargeAndLaunchDialog(this.seal.literalSeal ?? '')
+      ?.subscribe((data: boolean) => {
+        if(data) {
+          this.statement = '';
+          this.seal = this.facade.getSeal(this.statement);
+          this.facade.drawSigil(this.seal.literalSeal??'');
+          this.facade.showSuccessToaster(this.sigilLaunchedMessage, this.sigilLaunchedMessageTitle);
+        } else {
+          this.facade.showErrorToaster(this.sigilNotLaunchedMessage, this.sigilNotLaunchedMessageTitle);
         }
-
-        this._subscription.add(this.facade.openChargeAndLaunchDialog(this.seal.literalSeal ?? '')
-          ?.subscribe((data: boolean) => {
-            if(data) {
-              this.statement = '';
-              this.seal = this.facade.getSeal(this.statement);
-              this.facade.drawSigil(this.seal.literalSeal??'');
-              this.facade.showSuccessToaster(this.sigilLaunchedMessage, this.sigilLaunchedMessageTitle);
-            } else {
-              this.facade.showErrorToaster(this.sigilNotLaunchedMessage, this.sigilNotLaunchedMessageTitle);
-            }
-          }));
-      }));
+    }));
   }
 
   private getTranslations(): void {

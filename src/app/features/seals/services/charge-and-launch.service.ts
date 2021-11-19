@@ -20,6 +20,7 @@ export class ChargeAndLaunchService {
 
     this.dialogRef = this.dialog.open(ChargeAndLaunchComponent, {
       width: '600px',
+      disableClose: true,
       data: {
         title,
       },
