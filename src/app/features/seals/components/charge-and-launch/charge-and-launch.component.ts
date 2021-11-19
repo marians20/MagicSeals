@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
 import { ChargeAndLaunchService } from '../../services/charge-and-launch.service';
-import { GraphicalSealService } from '../../services/graphical-seal.service';
+import { GraphicalSigilService } from '../../services/graphical-seal.service';
 
 @Component({
   selector: 'app-charge-and-launch',
@@ -16,7 +16,7 @@ export class ChargeAndLaunchComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly chargeAndLaunchService: ChargeAndLaunchService,
-    private readonly graphicalSealService: GraphicalSealService,
+    private readonly graphicalSealService: GraphicalSigilService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       this._subscription.add(this.graphicalSealService.onImageGot.subscribe(img => {
         this.image = img;

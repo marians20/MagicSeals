@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Point, Segment, Size2D } from '../models';
-
-export type StrokeStyle = string | CanvasGradient | CanvasPattern;
+import { StrokeStyle } from '../models/seal.options';
 
 @Injectable({
   providedIn: 'root'

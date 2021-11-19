@@ -1,7 +1,7 @@
 import { AfterContentInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { StrokeStyle } from '../../services/draw.service';
-import { GraphicalSealService } from '../../services/graphical-seal.service';
+import { GraphicalSigilService } from '../../services/graphical-seal.service';
+import { SealOptions } from '../../models/seal.options';
 
 @Component({
   selector: 'app-graphical-seal',
@@ -9,16 +9,13 @@ import { GraphicalSealService } from '../../services/graphical-seal.service';
   styleUrls: ['./graphical-seal.component.scss']
 })
 export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestroy {
-  @Input() backgroundColor!: StrokeStyle;
-  @Input() foreColor!: StrokeStyle;
-  @Input() lineWidth!: number;
-  @Input() shouldDrawMap!: boolean;
+  @Input() options!: SealOptions;
 
   @ViewChild('canvas', { static: true }) canvas!: ElementRef<HTMLCanvasElement>;
 
   private readonly _subscription: Subscription = new Subscription();
   constructor(
-    private readonly graphicalSigilService: GraphicalSealService
+    private readonly graphicalSigilService: GraphicalSigilService
   ) {
       this._subscription.add(this.graphicalSigilService.onDrawSigilRequest.subscribe(literalSigil => {
         this.graphicalSigilService.drawSigil(literalSigil);
@@ -30,11 +27,8 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestr
      }
 
   ngOnInit(): void {
-    this.graphicalSigilService.ctx = this.canvas.nativeElement.getContext('2d')!;
-    this.graphicalSigilService.backgroundColor = this.backgroundColor;
-    this.graphicalSigilService.foreColor = this.foreColor;
-    this.graphicalSigilService.lineWidth = this.lineWidth;
-    this.graphicalSigilService.shouldDrawMap = this.shouldDrawMap;
+    this.graphicalSigilService.canvas = this.canvas.nativeElement;
+    this.graphicalSigilService.options = this.options;
   }
 
   ngOnDestroy(): void {
