@@ -16,11 +16,7 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestr
   private readonly _subscription: Subscription = new Subscription();
   constructor(
     private readonly graphicalSigilService: GraphicalSigilService
-  ) {
-      // this._subscription.add(this.graphicalSigilService.onGetImageRequest.subscribe(() => {
-      //   this.graphicalSigilService.image = this.graphicalSigilService.getJpeg();
-      // }));
-     }
+  ) { }
 
   ngOnInit(): void {
     this.graphicalSigilService.canvas = this.canvas.nativeElement;
@@ -32,11 +28,11 @@ export class GraphicalSealComponent implements OnInit, AfterContentInit, OnDestr
   }
 
   ngAfterContentInit(): void {
-    if(!this.graphicalSigilService.ctx) {
+    if(!this.graphicalSigilService.canRun) {
       console.log('Unable to create context.');
       return;
     }
-    this.graphicalSigilService.ctx.imageSmoothingEnabled = true;
+
     this.graphicalSigilService.drawSigil('');
   }
 }

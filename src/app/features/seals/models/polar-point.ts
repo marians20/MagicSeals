@@ -9,7 +9,7 @@ export class PolarPoint {
     return new Point(
       this.radius * Math.cos(this.alpha),
       this.radius * Math.sin(this.alpha)
-      );
+    );
   }
 
   public zoom(ratio: number): PolarPoint {

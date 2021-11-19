@@ -11,7 +11,17 @@ private readonly circles: number[][];
 
   constructor() {
     this.circles = this.getCircles(this.circleBorders);
-   }
+  }
+
+  getCirclesRadiuses(zoomRatio: number): number[] {
+    const result: number[] = [];
+    for(let i = 1; i <= this.circleBorders.length; i++) {
+      const radius = 2 * i / 6;
+      result.push(radius * zoomRatio);
+    }
+
+    return result;
+  }
 
   getPoints = (sigil: string, zoomRatio: number) =>
    this.getPolarCoordinates(sigil, zoomRatio)
