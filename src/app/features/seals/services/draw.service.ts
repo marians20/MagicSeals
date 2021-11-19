@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Point, Segment, Size2D } from '../models';
 
-type StrokeStyle = string | CanvasGradient | CanvasPattern;
+export type StrokeStyle = string | CanvasGradient | CanvasPattern;
 
 @Injectable({
   providedIn: 'root'
@@ -26,23 +26,23 @@ export class DrawService {
 
   drawRectangle(p1: Point, p2: Point, strokeStyle: StrokeStyle, lineWidth: number): void {
     this.initStroke(strokeStyle, lineWidth)
-    this.ctx.rect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y);
-    this.ctx.stroke();
+    this._ctx.rect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y);
+    this._ctx.stroke();
   }
 
   fillRectangle(p1: Point, p2: Point, fillStyle: StrokeStyle): void {
-    this.ctx.fillStyle = fillStyle;
-    this.ctx.fillRect(p1.x, p1.y, p2.x-p1.x, p2.y - p1.y);
+    this._ctx.fillStyle = fillStyle;
+    this._ctx.fillRect(p1.x, p1.y, p2.x-p1.x, p2.y - p1.y);
   }
 
   clearRectangle(p1: Point, p2: Point) {
-    this.ctx.clearRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y);
+    this._ctx.clearRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y);
   }
 
   drawCircle(center: Point, radius: number, strokeStyle: StrokeStyle, lineWidth: number): void {
     this.initStroke(strokeStyle, lineWidth);
-    this.ctx.arc(center.x, center.y, radius, 0, Math.PI * 2);
-    this.ctx.stroke();
+    this._ctx.arc(center.x, center.y, radius, 0, Math.PI * 2);
+    this._ctx.stroke();
   }
 
   drawSegment(segment: Segment, strokeStyle: StrokeStyle, lineWidth: number) {
@@ -51,43 +51,43 @@ export class DrawService {
 
   drawLine(p1: Point, p2: Point, strokeStyle: StrokeStyle, lineWidth: number) {
     this.initStroke(strokeStyle, lineWidth);
-    this.ctx.moveTo(p1.x, p1.y);
-    this.ctx.lineTo(p2.x, p2.y);
-    this.ctx.stroke();
+    this._ctx.moveTo(p1.x, p1.y);
+    this._ctx.lineTo(p2.x, p2.y);
+    this._ctx.stroke();
   }
 
   drawPLine(points: Point[], strokeStyle: StrokeStyle, lineWidth: number) {
     this.initStroke(strokeStyle, lineWidth);
-    this.ctx.moveTo(points[0].x, points[0].y);
+    this._ctx.moveTo(points[0].x, points[0].y);
     for(let i = 1; i < points.length; i++) {
-      this.ctx!.lineTo(points[i].x, points[i].y);
+      this._ctx!.lineTo(points[i].x, points[i].y);
     }
 
-    this.ctx.stroke();
+    this._ctx.stroke();
   }
 
   fillText(text: string, point: Point) {
-    this.ctx.fillText(text, point.x, point.y);
+    this._ctx.fillText(text, point.x, point.y);
   }
 
   initStroke(strokeStyle: StrokeStyle, lineWidth: number): void {
-    this.ctx.lineCap = 'round';
-    this.ctx.beginPath();
-    this.ctx.strokeStyle = strokeStyle;
-    this.ctx.lineWidth = lineWidth;
+    this._ctx.lineCap = 'round';
+    this._ctx.beginPath();
+    this._ctx.strokeStyle = strokeStyle;
+    this._ctx.lineWidth = lineWidth;
   }
 
   stroke() {
-    this.ctx.stroke();
+    this._ctx.stroke();
   }
 
 
   getBitmap() {
-    return this.ctx!
+    return this._ctx
     .getImageData(0, 0, this.canvasSize.height, this.canvasSize.width).data;
   }
 
   getJpeg() {
-    return this.ctx.canvas.toDataURL("image/jpeg", 1.0);
+    return this._ctx.canvas.toDataURL("image/jpeg", 1.0);
   }
 }
