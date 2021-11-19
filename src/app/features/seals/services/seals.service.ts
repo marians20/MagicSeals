@@ -152,8 +152,13 @@ export class SealsService {
   private fixDiacritics = (value: string) =>
   value
     .replace('Ă', 'A')
+    .replace('ă', 'a')
     .replace('Ș', 'S')
+    .replace('ș', 's')
     .replace('Ț', 'T')
+    .replace('ț', 't')
     .replace('Î', 'I')
-    .replace('Â', 'A');
+    .replace('î', 'i')
+    .replace('Â', 'A')
+    .replace('â', 'a');
 }

@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 
 import { ToasterService } from "../../../../shared/services/toaster.service";
 import { ChargeAndLaunchService } from "../../services/charge-and-launch.service";
-import { GraphicalSealService } from "../../services/graphical-seal.service";
+import { GraphicalSigilService } from "../../services/graphical-seal.service";
 import { SealsService } from "../../services/seals.service";
 import { StrategySelectorService } from "../../services/strategy-selector.service";
 import { ConfirmationDialogService } from '../../../../shared/services/confirmation-dialog.service';
@@ -16,7 +16,7 @@ import { AuthService } from '../../../../shared/services/auth.service';
 export class SealsComponentFacade {
   private _sealsService: SealsService | undefined;
   private _strategyService: StrategySelectorService | undefined;
-  private _graphicalSealService: GraphicalSealService | undefined;
+  private _graphicalSealService: GraphicalSigilService | undefined;
   private _chargeAndLaunchService: ChargeAndLaunchService | undefined;
   private _toastr: ToasterService | undefined;
   private _translate: TranslateService | undefined;
@@ -43,7 +43,7 @@ export class SealsComponentFacade {
   getSeal = (statement: string) =>
     this.sealsService.getSeal(statement, this.strategyService.strategy);
 
-  drawSigil = (literalSigil: string) => this.graphicalSealService.drawSigil(literalSigil);
+  drawSigil = (literalSigil: string) => this.graphicalSealService.requestDrawSigil(literalSigil);
 
   openChargeAndLaunchDialog = (title: string) => this.chargeAndLaunchService.openDialog(title);
 
@@ -71,9 +71,9 @@ export class SealsComponentFacade {
     return this._strategyService;
   }
 
-  private get graphicalSealService(): GraphicalSealService {
+  private get graphicalSealService(): GraphicalSigilService {
     if(!this._graphicalSealService) {
-      this._graphicalSealService = this.injector.get(GraphicalSealService);
+      this._graphicalSealService = this.injector.get(GraphicalSigilService);
     }
 
     return this._graphicalSealService;

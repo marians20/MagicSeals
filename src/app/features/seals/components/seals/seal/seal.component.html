@@ -1,27 +1,25 @@
 <mat-card>
   <div *ngIf="showStatement" class="statement">
-    <label>{{'SIGILS.STATEMENT' | translate}}:</label>
+    <label>{{ "SIGILS.STATEMENT" | translate }}:</label>
     <p>{{ seal?.statement }}</p>
   </div>
   <div class="result">
     <div class="values">
       <div class="literal-seal">
-        <label>{{'SIGILS.LITERAL_SIGIL' | translate}}:</label>
+        <label>{{ "SIGILS.LITERAL_SIGIL" | translate }}:</label>
         <p>{{ seal?.literalSeal }}</p>
       </div>
       <div class="numeric-seal">
-        <label>{{'SIGILS.NUMERIC_SIGIL' | translate}}:</label>
+        <label>{{ "SIGILS.NUMERIC_SIGIL" | translate }}:</label>
         <p>{{ seal?.numericSeal }}</p>
       </div>
       <div class="condensed-numeric-seal">
-        <label>{{'SIGILS.CONDENSED_NUMERIC_SIGIL' | translate}}:</label>
+        <label>{{ "SIGILS.CONDENSED_NUMERIC_SIGIL" | translate }}:</label>
         <p>{{ seal?.condensedNumericSeal }}</p>
       </div>
     </div>
     <div class="graphic-seal">
-      <app-graphical-seal
-        [backgroundColor]="sealBackgroundColor"
-        [foreColor]="sealColor"></app-graphical-seal>
+      <app-graphical-seal [options]="options"></app-graphical-seal>
     </div>
   </div>
 </mat-card>

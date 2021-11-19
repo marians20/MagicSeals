@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GraphicalSigilService } from './graphical-seal.service';
+import { DrawService } from './draw.service';
 
-describe('GraphicalSealService', () => {
-  let service: GraphicalSigilService;
+describe('DrawService', () => {
+  let service: DrawService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(GraphicalSigilService);
+    service = TestBed.inject(DrawService);
   });
 
   it('should be created', () => {
