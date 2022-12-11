@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 
+import { auth, login } from '../../../config/firebase-config';
+
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -10,13 +12,13 @@ import { AuthService } from './auth.service';
 export class AuthGuardService implements CanActivate {
 
   constructor(
-    private readonly auth: AuthService,
+    //private readonly auth: AuthService,
     private readonly router: Router) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
-    : boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    if (!this.auth.isAuthenticated) {
-      this.router.navigate(['layout/login']);
+  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
+    : Promise<boolean | UrlTree> {
+    if (!auth.currentUser) {
+      await login();
       return false;
     }
 
