@@ -24,6 +24,7 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "angularx-social-login": "^4.0.1",
+    "firebase": "^9.15.0",
     "ngx-toastr": "^14.2.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
