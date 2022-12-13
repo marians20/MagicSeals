@@ -7,6 +7,7 @@ export const environment = {
     storageBucket: "__$STORAGE_BUCKET__",
     messagingSenderId: "__MESSAGING_SENDER_ID__",
     appId: "__APP_ID__",
-    measurementId: "__MEASUREMENT_ID__"
-  }
+    measurementId: "__MEASUREMENT_ID__",
+  },
+  author: "__AUTHOR__",
 };
