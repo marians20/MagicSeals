@@ -10,6 +10,7 @@ import { getAnalytics } from "firebase/analytics";
 import { environment } from "src/environments/environment";
 // Initialize Firebase
 console.log(environment.author);
+console.log(environment.author);
 const app = initializeApp(environment.firebaseConfig);
 const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
