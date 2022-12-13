@@ -9,8 +9,7 @@ import { getAnalytics } from "firebase/analytics";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 import { environment } from "src/environments/environment";
 // Initialize Firebase
-console.log(environment.author);
-console.log(environment.author);
+console.log(`Author: ${environment.author}`);
 const app = initializeApp(environment.firebaseConfig);
 const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
