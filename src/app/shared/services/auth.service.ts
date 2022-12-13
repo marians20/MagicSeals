@@ -1,51 +1,56 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import {
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth';
+import { User } from 'firebase/auth';
 import { Subject } from 'rxjs';
-import { User } from '../models/user.model';
+import { firebaseAuth } from 'src/config/firebase-config';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   onLoggedIn: Subject<User> = new Subject();
   onLoggedOut: Subject<void> = new Subject();
+  provider = new GoogleAuthProvider();
+  private _user: User | undefined = undefined;
   constructor(
     public readonly jwtHelper: JwtHelperService,
-    public readonly router: Router) {}
+    public readonly router: Router
+  ) {
+    this.provider.setCustomParameters({ prompt: 'select_account' });
+    onAuthStateChanged(firebaseAuth, (user) => {
+      this._user = user || undefined;
+      if (user) {
+        this.onLoggedIn.next(user);
+      } else {
+        this.onLoggedOut.next();
+      }
+    });
+  }
 
   get isAuthenticated(): boolean {
-    if(this.jwtHelper.isTokenExpired()) {
-      this.logout();
-      return false;
+    return !!this.user;
+  }
+
+  get user() {
+    return this._user;
+  }
+
+  async login() {
+    try {
+      await signInWithPopup(firebaseAuth, this.provider);
+    } catch (error: any) {
+      throw new Error(error.message);
     }
-
-    return true;
   }
 
-  get user(): User | undefined {
-    const stringUser = localStorage.getItem('user_details');
-    if(!stringUser) {
-      return undefined;
-    }
-
-    return JSON.parse(stringUser);
-  }
-
-  login(user: User) {
-    localStorage.setItem('access_token', user.idToken);
-    localStorage.setItem('user_details', JSON.stringify(user));
-    this.onLoggedIn.next(user);
-  }
-
-  logout() {
-    console.log('Logout');
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('user_details');
-    this.onLoggedOut.next();
-  }
-
-  private setToken(token: string) {
-    localStorage.setItem('access_token', token);
+  async logout() {
+    await signOut(firebaseAuth);
   }
 }

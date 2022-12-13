@@ -70,7 +70,6 @@ private readonly circles: number[][];
         ));
     }
 
-    console.log(circles);
     return circles;
   }
 

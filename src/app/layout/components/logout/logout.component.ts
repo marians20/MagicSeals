@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { User } from 'firebase/auth';
 import { Subscription } from 'rxjs';
-import { User } from 'src/app/shared/models/user.model';
 import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
-  styleUrls: ['./logout.component.scss']
+  styleUrls: ['./logout.component.scss'],
 })
-export class LogoutComponent implements OnInit {
+export class LogoutComponent implements OnInit, OnDestroy {
   private readonly _subscriptions: Subscription = new Subscription();
   isAuthenticated: boolean;
   user: User | undefined;
@@ -16,22 +16,32 @@ export class LogoutComponent implements OnInit {
     this.isAuthenticated = auth.isAuthenticated;
     this.user = this.auth.user;
 
-    this._subscriptions.add(auth.onLoggedIn.subscribe((user) => {
-      this.isAuthenticated = true;
-      this.user = user;
-    }));
+    this._subscriptions.add(
+      auth.onLoggedIn.subscribe((user) => {
+        this.isAuthenticated = true;
+        this.user = user;
+      })
+    );
 
-    this._subscriptions.add(auth.onLoggedOut.subscribe(() => {
-      this.isAuthenticated = false;
-      this.user = undefined;
-    }));
-   }
-
-  ngOnInit(): void {
+    this._subscriptions.add(
+      auth.onLoggedOut.subscribe(() => {
+        this.isAuthenticated = false;
+        this.user = undefined;
+      })
+    );
   }
 
-  logout(): void {
-    this.auth.logout();
+  ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this._subscriptions.unsubscribe();
   }
 
+  async login(): Promise<void> {
+    await this.auth.login();
+  }
+
+  async logout(): Promise<void> {
+    await this.auth.logout();
+  }
 }

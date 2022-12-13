@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit, AfterContentInit {
       }
 
       this.socialUser = user;
-      this.auth.login(user);
+      this.auth.login();
       this.router.navigate(['seals']);
     });
   }

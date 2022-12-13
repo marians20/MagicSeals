@@ -1,24 +1,51 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
-
-import { auth, login } from '../../../config/firebase-config';
+import { Injectable, OnDestroy } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 
 import { AuthService } from './auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AuthGuardService implements CanActivate {
+export class AuthGuardService implements CanActivate, OnDestroy {
+  private readonly _subscription: Subscription = new Subscription();
+  private url: string | undefined = undefined;
 
   constructor(
-    //private readonly auth: AuthService,
-    private readonly router: Router) { }
+    private readonly auth: AuthService,
+    private readonly router: Router,
 
-  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
-    : Promise<boolean | UrlTree> {
-    if (!auth.currentUser) {
-      await login();
+  ) {
+    this._subscription.add(
+      this.auth.onLoggedIn.subscribe((loggedIn) => {
+        if(loggedIn) {
+          this.url && this.router.navigate([this.url]);
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.unsubscribe();
+  }
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ):
+    | boolean
+    | UrlTree
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree> {
+      this.url = state.url;
+    if (!this.auth.isAuthenticated) {
+      this.auth.login();
       return false;
     }
 
